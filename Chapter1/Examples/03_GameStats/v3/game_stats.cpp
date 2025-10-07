@@ -1,5 +1,5 @@
 // Game Stats 3.0
-// Demonstrates constraints
+// Demonstrates constants
 
 #include <iostream>
 

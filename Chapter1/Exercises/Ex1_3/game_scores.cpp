@@ -11,7 +11,7 @@ using std::endl;
 int main() {
 
     int score1, score2, score3;
-    int n_scores = 3.0;
+    const float N_SCORES = 3.0;
 
     cout << "Enter three integer scores each seperated by a new line" << endl;
 
@@ -19,7 +19,7 @@ int main() {
     cin >> score2;
     cin >> score3;
 
-    cout << "The average score is: " << (score1 + score2 + score3) / n_scores << endl;
+    cout << "The average score is: " << (score1 + score2 + score3) / N_SCORES << endl;
     
     return 0;
 }
