@@ -13,6 +13,13 @@ This repository has been broken down by Chapter. Each Chapter contains a markdow
 
 ## Content
 
+1. [Chapter 1](./Chapter1/Chapter1.md) - Types Variables and Standard I/O: [Lost Fortune](./Chapter1/Chapter1.md#major-project-lost-fortune)
+2. [Chapter 2](./Chapter2/Chapter2.md) - Truth, Branching and the Game Loop: Guess My Number
+3. [Chapter 3](./Chapter3/Chapter3.md) - For Loops, Strings and Arrays: Word Jumble
+4. [Chapter 4](./Chapter4/Chapter4.md) - The Standard Template Library: Hangman
+5. [Chapter 5](./Chapter5/Chapter5.md) - Functions: Mad Lib
+6. [Chapter 6](./Chapter6/Chapter6.md) - References: Tic-Tac-Toe
+
 ## Code Style
 
 Generally each Chapter is treated by restricting oneself to the parts of the language as presented in the book up to that point. Where we deviate from this we will generally make reference to doing so.
