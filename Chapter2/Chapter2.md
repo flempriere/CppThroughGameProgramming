@@ -53,11 +53,11 @@ a computer generated number in as few guesses as possible
 
 1. *What kind of things would be difficult to program without loops?*
     - Any kind of functionality which has to repeat an arbitrary number of times is difficult without some form of loop construct.
-2. *What are the advantages and disadvantages of the `switch` statement versus a series of `if` statements* 
+2. *What are the advantages and disadvantages of the `switch` statement versus a series of `if` statements*
     - The switch statement has the advantage of performing the multiway with one comparison
-    - The `if-else-if-else` construct requires us to write a sequentual series of `if-else-if` statements that must be tested in turn. 
+    - The `if-else-if-else` construct requires us to write a sequentual series of `if-else-if` statements that must be tested in turn
     - Additionally the `switch` statement can use cascading behaviour
-      - Code falls through from one case to the next in the absence of a `break` 
+      - Code falls through from one case to the next in the absence of a `break`
       - Can write short code in cases where there is a standard behaviour with some preprocessing performed in a couple of special cases.
     - However the `if-else-if-else` construct is more flexible since the conditional for the branch may be any expression, not just an `int`
 3. *When might you `omit` a break statement from the end of `switch` statement?*
@@ -72,7 +72,7 @@ a computer generated number in as few guesses as possible
 
 *Rewrite the Menu Chooser program from this chapter using an enumeration to represent difficulty levels. The variable `choice` will still be of type `int`*
 
-We create the `enum difficulty` as 
+We create the `enum difficulty` as
 
 ```cpp
     enum difficulty {EASY = 1, NORMAL, HARD}
@@ -80,7 +80,7 @@ We create the `enum difficulty` as
 
 We explicitly assign `EASY` the value of $1$ so all the constants are the same as in the original code. This implement is much better because now the numbers are assigned semantic meaning in the code through the enumeration. This also makes it easy to extend or modify the difficulty settings in the future
 
-### [Exercise 2.2](./Exercises/Ex2_2/ex2_2.cpp)
+#### [Exercise 2.2](./Exercises/Ex2_2/ex2_2.cpp)
 
 *What's wrong with the following loop?*
 
@@ -94,7 +94,7 @@ while(x) {
 
 At the first evaluation of the `while` condition `x` will have the vlaue $0$ which is equivalent to `false`. Hence the loop will never run (and if it did it would run endlessly since `x` will continously increase and the overflow behaviour of signed integers is undefined)
 
-### [Exercise 2.3](./Exercises/Ex2_3/guess_my_number.cpp)
+#### [Exercise 2.3](./Exercises/Ex2_3/guess_my_number.cpp)
 
 *Write a new version of the [Guess My Number](#major-project-guess-my-number) program in which the player and the computer switch roles. That is, the player picks a number and the computer must guess what it is.*
 
@@ -109,6 +109,93 @@ For the computer, the simplest approach is to make the computer randomly guess a
 - If `a' == b'`, then there is only one valid guess and we generate that number. Otherwise randomly generate a number in the range `[a', b']` and repeat.
 
 ## Notes
+
+- To create interesting programs you need to ability to execute (or skip) sections of code based on some condition
+
+### Understanding Truth
+
+- Truth can be represented with `true` and `false`
+- Truthfulness can be stored in a `bool`
+  - e.g. `bool fact = true, fiction = false`
+- Any expression can be evaluated for truthfulness
+  - Any non-zero value is `true`
+  - Zero is interpreted as `false`
+- A common truthfulness expression is a *relation*
+
+| Operator | Meaning                  | Sample Expression | Evaluates to |
+|----------|--------------------------|-------------------|--------------|
+| ==       | equal to                 | 5 == 5, 5 == 8     | true, false   |
+| !=       | not equal to             | 5 != 8, 5 != 5     | true, false   |
+| >        | greater than             | 8 > 5, 5 > 8       | true, false   |
+| <        | less than                | 5 < 8, 8 < 5       | true, false   |
+| >=       | greater than or equal to | 8 >= 5, 5 >= 8     | true, false   |
+| <=       | less than or equal to    | 5 <= 8, 8 <= 5     | true, false   |
+
+### Using the `if` Statement
+
+- `if` statements allow you to test an expression for truthfulness and conditionally execute some code
+
+```cpp
+if (expression) {
+    statement;
+}
+```
+
+- If `expression` is `true`, then `statement` is executed.
+- Otherwise statement is skipped
+
+### Example [Score Rater](#score-rater-v1)
+
+### Testing `true` and `false`
+
+>[!CAUTION]
+>Notice that you don't use a semicolon after the closing parenthesis of the expression you test in an `if` statement. If you were to do this, you'd create an empty statement that would be paired with the `if` statement, essentially rendering the `if` statement useless. Here's an example
+>
+>```cpp
+>if (false);
+>{
+>   cout << "Thhis is never displayed.\n\n";    
+>}
+>```
+>
+>By adding the semicolon after (`false`), I create an empty statement thats associated with the `if` statement. The preceding code is equivalent to:
+>
+>```cpp
+>if (false) {
+>   ; // an empty statement which does nothing    
+>}
+>{
+>   cout << "This is never displayed.\n\n";    
+>}
+>```
+>
+> The `if` statement sees the `false` value and skips the next statement (the empty statement). Then the program goes on its merry way to the statement after the `if` statement, which displays the message, `"This is never displayed"`.
+>
+>Be on guard for this error. It's an easy one to make and because it's not illegal, it won't produce a compile error
+
+### Interpreting a Value as `true` or `false`
+
+- As mentioned any expression can be evaluated as `true` (non-zero) or `false`
+
+### Using Relational Operators
+
+>[!CAUTION]
+>The equal to relational operator is `==`. Don't confuse it with the assignment operator `=`.
+>
+>It's not illegal to use the assignment operator instead of the equal to relational operator, the results might not be what is expected though. Look at this code
+>
+>```cpp
+>int score = 500;
+>if (score = 1000) {
+>   cout << " You scored 1000 or more. Impressive!\n";    
+>}
+>```
+>
+> As a result of this code, `score` is set to `1000` and the message, `"You scored 1000 or more. Impressive!"` is displayed. Here's what happens: `score` is $500$ before the `if` statement. When the expression is evaluated, `score` is assigned the value $1000$, the assignment expression is evaluated as $1000$ which is non-zero and interpreted as `true`. As a result the string is displayed.
+>
+>Be on guard for this type of mistake. It's easy to make and in some cases can be hard to find (though most modern compilers should warn about it.)
+
+### Nesting `if` statements
 
 ## Summary
 
