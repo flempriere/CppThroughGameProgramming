@@ -197,6 +197,345 @@ if (expression) {
 
 ### Nesting `if` statements
 
+- An `if` statement may execute a single statement or a block of statements
+- This includes potentially other `if` statements (called *nesting*)
+
+>[!WARNING]
+> You can nest as many levels as you want. However, if you nest code too deeply, it gets hard to read. In general, you should try to limit your nesting to a few levels at most
+
+### Using the `else` clause
+
+- An `else` clause is attached to an `if` statement
+- The `else` clause executes when the `if` statement test expression evaluates to `false`
+
+```cpp
+if (expression) {
+    statement1; //executed if expression is true
+} else {
+    statement2; //executed if expression is false
+}
+```
+
+### Example [Score Rater 2.0](#score-rater-v2)
+
+### Using a sequence of `if` statements with `else` clauses
+
+- You can chain `if` statements with `else` clauses to create a sequence of ordered test expressions.
+- The statements will be executed from top to bottom until one evaluates as `true` or the `else` clause is reached
+
+```cpp
+if (expresssion1) {
+    statement1;
+} 
+else if (expression2) {
+    statement2;
+} ...
+else if (expressionN) {
+    statementN;
+}
+else {
+    statementN+1;
+}
+```
+
+>[!TIP]
+> While the final `else` clause in an `if-else-if` suite isn't required, you can use it as a way to execute code if none of the expressions in the sequence are `true`
+
+### Example [Score Rater 3.0](#score-rater-v3)
+
+### Using the `switch` statement
+
+- `switch` statements allow multi-way branching
+
+```cpp
+switch(choice) {
+    case value1:
+        statement1;
+        [break;]
+    case value2:
+        statement2
+        [break;]
+        .
+        .
+        .
+    case valueN:
+        statementN;
+        [break;]
+    default:
+        statementN+1;
+}
+```
+
+- statement tests `choice` against the `case` *labels* in order
+- If equal to a *label* program execution, *jumps* to that label
+- Execution exits the `switch` on encountering a `break`
+- If no match is found then `default` is executed
+- `break` and `default` optional
+
+>[!WARNING]
+>Although a default case isn't required, it's usually a good idea to have one as a catchall
+
+- If there is no `break` after a *statement*, execution *falls though* to the next case
+
+>[!CAUTION]
+>You can use the `switch` statement, only to to test an `int` (or a value that can be treated as one such as a `char` or an `enumerator`). A switch statement won't work with any other type
+
+- `switch` cases must be specific values, they cannot be conditions or ranges
+
+### Example [Menu Chooser](#menu-chooser)
+
+>[!CAUTION]
+>You'll almost always want to end each case with a `break` statement. Don't forget them otherwise your code might do things you never intended
+
+### Using `while` loops
+
+- `while` loops enable repeated sections of code while an expression is `true`
+
+```cpp
+while(expression) {
+    statement;
+}
+```
+
+- If `expression` is `false` execution moves past the statement
+- If `expression` is `true` the statement is exectued, then control returns to top of the loop where it is tested again
+
+### Example [Play Again](#play-again-v1)
+
+### Using `do` Loops
+
+- `do` loops like `while` loops allow repeated code
+
+```cpp
+do {
+    statement;
+} while(expression);
+```
+
+>[!NOTE]
+>Even though you can use `while` and `do` loops interchangeably, most programmers use the `while` loop. Although a `do` loop may seem more natural in some cases, the advantage of the `while` loop is that its expression appears right at the top of the loop; you don't have to go to the bottom of the loop to find it.
+
+- Unlike a `while` loop, the statement is executed *first* and then the control expression is evaluated
+
+>[!CAUTION]
+> If you've ever had a game get stuck in the same endless cycle, you might have experienced an *infinite loop* (a loop without end). Here's a simple example,
+>
+>```cpp
+>int test = 10;
+>while(test == 10) {
+>   cout << test;   
+>}
+>```
+>
+>In this case, the loop is entered because `test` is `10`. But because `test` never changes, the loop will never stop. As a result, the user will have to kill the running program to end it. The moral of the story? Make sure that the expression of a loop can eventually become `false` or that there's another way for the loop to end. See [Using Break and Continue Statements](#using-break-and-continue-statements)
+
+### Example [Play Again 2.0](#play-again-v2)
+
+### Using Break and Continue Statements
+
+- You can immediately exit a loop with the `break` statement
+- You can jump directly to the top of a loop with the `continue` statement
+
+### Example [Finicky Counter](#finicky-counter)
+
+- Here we have a main loop structured as
+
+```cpp
+int count = 0;
+while(true) {
+    count += 1;
+    //end loop if count is greater than 10
+    if (count  > 10) {
+        break; //immediately exits the loop
+    }
+    //skip the number 5
+    if (count == 5) {
+        continue; // skips to next loop iteration
+    }
+    cout << count << endl; //normal loop behaviour
+}
+```
+
+### Creating a `while(true)` loop
+
+- The line `while(true)` creates an infinite loop
+  - Fine as long as the loop body contains an exit condition
+  - `while(true)` better than a hidden infinite loop since the intentionality is clear
+
+>[!WARNING]
+>Although a `while(true)` loop sometimes can be clearer than a traditional, you should try to minimise your use of these loops
+
+### When to use `break` and `continue`
+
+- Can be used in any loop construct
+- Use sparingly, since they make it harder to reason about the flow of a loop
+  - Typically best in nested or complex conditional cases where carrying the information through to the next loop variable is tedious
+  - e.g. Error handling
+
+### Using Logical Operators
+
+- Logical operators allow simple expressions to be combined into more complex truthfulness expressions
+
+| Operator | Description | Sample Expression            |
+|----------|-------------|------------------------------|
+| `!`        | Logical NOT | `!expression`                  |
+| `&&`       | Logical AND | `expression1 && expression2`   |
+| `\|\|`     | Logical OR  | `expression1 \|\| expression2` |
+
+### Example [Designers Network](#designers-network)
+
+### Using Logical AND
+
+- Logical AND (`&&`) joins two expressions to form a larger one
+- `true` only if *both* expressions are `true`
+
+| `expression1` | `expression2` | `expression1 && expression2` |
+|-------------|-------------|----------------------------|
+| true        | true        | true                       |
+| true        | false       | false                      |
+| false       | true        | false                      |
+| false       | false       | false                      |
+
+### Using Logical OR
+
+- Logical OR (`||`) joins two expressions to form a larger one
+- `true` if *either* expression is `true`
+
+| `expression1` | `expression2` | `expression1 && expression2` |
+|-------------|-------------|----------------------------|
+| true        | true        | true                       |
+| true        | false       | true                       |
+| false       | true        | true                       |
+| false       | false       | false                      |
+
+### Using Logical NOT
+
+- Logical NOT (`!`) flips the truthfulness of an expression
+
+| `expression` | `!(expression)` |
+|--------------|-----------------|
+| true         | false           |
+| false        | true            |
+
+### Understanding Order of Operations
+
+- Logical operators also have a precendence
+- `! > && > ||`
+- Can use parentheses to override order of operations
+
+>[!TIP]
+>Although you can use parentheses in a larger expression to change the way in which it's evaluated you can also use *redundant* parentheses (parentheses that don't change the value of the expression) to make the expression clearer. Consider the simple example
+>
+>`(username == "S.Meier && password == "civilisation")`
+>
+>Now here's the expression with redundant parentheses,
+>
+>`((username == "S.Meier) && (password == "civilisation))`
+>
+>The extra parentheses don't change the meaning of the expression but help demarcate the two smaller expressions joined by the `&&` operator.
+>
+>**Note:** When and where to use redundant parentheses is something you can only learn with experience
+
+### Generating Random Numbers
+
+- Computers have techniques for generating *pseudo*random numbers
+  - Pseudorandom numbers are not truely based random but based on a formula designed to mimic randomness
+
+### The `rand()` function
+
+- `rand()` is a function from the `C` standard library that is grandfathered into `C++`
+- To use `rand()` include `cstdlib` via `#include <cstdlib>`.
+- `rand()` requires no arguments and returns a random number
+  - e.g. `int randomNumber = rand()`
+
+>[!WARNING]
+>The `rand()` function generates a random number between $0$ and at least $32767$. The exact upper limit depends on your implementation of C++. The upper limit is stored in the constant `RAND_MAX`, which is defined in `cstdlib`. So if you want to know the maximum random number `rand()` can generat, just send `RAND_MAX` to `cout`.
+
+### Seeding a Random Number Generator
+
+- As mentioned before a computer generates `pseudorandom` numbers
+  - random*like* numbers generated according to a sequence or formula
+- *Seeding* is the process of telling the random number generator where in the sequence to start generating numbers from.
+  - If the program is not seeded (or not seeded unique) each time it is executed, then the sequence of random numbers generated will be identical
+- A common seeding technique is to use the current clock time, as demonstrated below
+
+```cpp
+srand(static_cast<unsigned int>(time(0))); //seed random number generator
+```
+
+- The function `srand` takes in an `unsigned int` to set as the seed for `rand`
+- `time` returns a number based on the current system date and time
+  - `static_cast<unsigned int>(*number*)` converts this number to an `unsigned int` as required by `srand`
+- **Note:** seeding the random number generator has to be done *before* calling `rand`
+
+>[!IMPORTANT]
+>A comprehensive explanation of the various forms of casting a value from one type to another is beyond the scope of this book.
+
+### Calculating a Number within a range
+
+- By default `rand()` returns a value between $0$ and `RAND_MAX` (see the above *warning* discussion)
+- A technique to convert this number to lie within a range is to use the `%` operator.
+  - e.g. to convert the result to a die roll between $1$ and $6$ use
+
+```cpp
+int die = (randomNumber % 6) + 1;
+```
+
+- The first part of the expression folds `randomNumber` into the range $0$ to $5$ and the second then shifts this to $1$ to $6$
+
+>[!CAUTION]
+>Using the modulus operator to create a number within a range from a random number might not always produce uniform results. Some numbers in the range might be more likely to appear than others. However, this isn't a problem for simple games
+
+### Understanding the Game Loop
+
+- The *game loop* is a generalised representation of the flow of events in a game
+- The core of the events repeats, hence the name *game loop*
+- Specific implementations may vary game to game
+- The generic game loop structure can be considered as
+  1. **Setup:** Accepting initial settings or loading game assets. Providing context to the player
+  2. **Getting player input:** Either from *mouse*, *keyboard* or some other *device*
+  3. **Update game internals:** The game logic and rules are applied to the game world in response to player input. e.g. Physics system updating collisions, A.I making moves
+  4. **Updating the display:** Drawing graphics or returning display text
+  5. **Checking if the game is over:** If the game isn't over the loop branches back to receiving player input. If the game is over control falls through to the shutting down stage
+  6. **Shutting down** The game is over, the player may be given some final information, such as his score. The program frees and resources and if necessary exits
+
+### Introducing [Guess My Number](#major-project-guess-my-number)
+
+- Classic guessing game
+- The Computer randomly generates a number between $0$ and $100$
+- While the player has not correctly guessed the number, they are then
+  1. Player prompted for a number
+  2. Player enters a number
+  3. `If` the number matches the randomly generated number the player *wins*, `else` the player is informed if the number is *too high* or *too low* and control flow returns to the prompt stage
+  4. Once the player guesses the number they are informed how many guesses it took them
+
+```mermaid
+---
+title: Guess My Number Game Loop
+config:
+    flowchart:
+        htmlLabels: false
+---
+
+flowchart TD
+setup["Pick a random number"]
+input["Get the Player's Guess"]
+response["Increment Number of Tries"]
+guessed@{shape: diam, label: "Guessed Number?"}
+inform["Tell Player if Guess is 
+Too High or Too Low"]
+won["Congratulate Player
+ and Tell Number of Tries"]
+
+setup-->input
+input-->response
+response-->guessed
+guessed-->|No|inform
+guessed-->|Yes|won
+inform-->input
+
+```
+
 ## Summary
 
 - You can use the truthfulness of an expression to branch (or skip) code
