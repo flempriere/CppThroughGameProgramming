@@ -82,6 +82,156 @@ The problem above is that the way the code semantically reads is that board shou
 
 ## Notes
 
+- Lots of time in code rather than dealing with single units of data, we work with *sequences* of data.
+  - e.g. *strings*, which are sequences of characters
+
+### Using `for` loops
+
+- Well suited for iterating over a sequence
+
+```cpp
+for (initialisation ; test ; action) {
+    statement;
+}
+```
+
+- *initialisation* is a statement that sets up some initial condition prior to loop body execution
+  - This may include defining variables
+- *test* is the loop condition, equivalent to the *while* loops test statement
+  - *statement* is what is done when the loop condition is `true`
+- *action* is executed after each iteration of the loop body
+  - Commonly this is iterating or counting over an index
+
+### Example: [Counter Program](#counter)
+
+>[!CAUTION]
+> If you're using an older compiler that doesn't support modern C++ standards, when you try to compile the [counter](#counter) example you might get an error that says something like `error: 'i': redefinition: multiple initialisation`.
+>
+>The best solution is to use a modern,  compliant compiler such as `g++` or `clang`, or `MSVC` on Windows. If you must use an old compiler then declare any `for` loop counter variables just once for all `for` loops in scope. Scopes are covered in [Chapter 5](../Chapter5/Chapter5.md/)
+
+### Counting with `for` loops
+
+- Typical use for `for` loops is iterating over a sequence like `for (int i = 0; i < 10; i++)` which iterates from $0$ through to $9$ inclusive
+- `for` loops can also work backwords e.g. `for (int i = 9; i >= 0; --i)` works as before but counts backwards from $9$
+- The *action* in a `for` loop is not restricted to simple sequential counting, e.g. `for(int i = 0; i <= 50; i += 5)` counts up in increments of $5$
+- `for` loops can be just as susceptible to infinite loops as `while` loops
+
+### Using empty statements in `for` loops
+
+- You can use empty statements in creating your `for` loop, as I did in the following loop, `for (; count < 10; )`
+- Empty statements are effectively ignored, an empty *test condition* is equivalent to a `while(true)` statement
+
+>[!NOTE]
+> Different game programmers have different traditions. In the last chapter, you saw that you can create a loop that continues until it reaches an exit statement (such as a `break`) using `while(true)`. Some programmers, prefer to use `for(;;)`.
+Because the test expression in this loop is the empty statement, the loop will continue until it encounters some exit statement
+
+### Nestng `for` Loops
+
+- You can nest `for` loops
+
+### Understanding `for` Loops
+
+- Fundamental types store individual pieces of information
+- We've seen how these can be manipulated through operators and functions
+- Many things are *objects* (encapsulated, cohesive things that combine qualities and abilities)
+  - e.g. An *Alien Spaceship* might have a *quality*: **energy level** and an *ability*: **firing it's weapons**
+- C++, like many modern languages lets you define *software objects*  which combine data and functions
+  - *data object* called a *data member* or *attributes*
+  - *object function* called a *member function* or *method*
+  - Same *type* objects have the same structure, but can have different values
+- For objects you don't need to know the underlying implementation, purely what we can do with the object
+- Objects can be stored in variables as for fundamental types
+
+### Using `string` objects
+
+- `string` objects are used for sequences of characters
+  - Is actually an object
+    - Provides member functions e.g. length and character substitution
+    - `strings` also defined to work intuitively with specific *operators*
+
+### Example [String Tester](#string-tester)
+
+### Creating `string` objects
+
+- There are several methods to create a `string` in C++
+
+```cpp
+string word1 = "Game";
+string word2("Over");
+string word3(3, '!');
+```
+
+- The first creates a string `word1` using the assignment operator and a *string literal* as with fundamental types
+- The second creates a string `word2` by wrapping the desired *string literal* in parentheses using a function call syntax
+- The final creates a string `word3` by using a function call syntax with a *number* denoting the string length, followed by the character `'!'` which is repeated to the desired length to give the string `"!!!"`
+
+### Concatenating `string` Objects
+
+- `strings` can be *concatenated* using the *addition* operator
+
+```cpp
+string phrase = word1 + " " + word2 + word3;
+```
+
+- The above code creates the string, `"Game Over!!!"`
+- `+` which is normally mathematical addition has been *overloaded* to mean concatenation
+
+### Using the `size()` Member Function
+
+- `string` has the member function `size` which returns the size (number of characters) in the string.
+- member functions are called with the `object.member_function()` syntax
+
+>[!TIP]
+>`string` objects also have a member function `length()`, which, just like `size()`, returns the number of characters in the `string` object.
+
+### Indexing a `string` object
+
+- Individual sequence elements of a `string` can be accessed using *index notation* e.g. `phrase[0]` returns the first character in the string `phrase`
+  - **Note**: C++ sequences are $0$-indexed, i.e. the first index is $0$
+
+>[!CAUTION]
+>It's a common mistake to forget that indexing begins at position $0$. Remember a `string` object with $n$ characters in it can be indexed from position $0$ to position $n - 1$
+
+- You can also reassign individual characters in a `string` e.g. `phrase[0] = 'L'` sets the first character of the string `phrase` to `'L'`.
+
+>[!CAUTION]
+> C++ compilers do not perform bounds checking when working with `string` objects and the subscropting oeprator. This means that the compiler doesn't check to see whether you're attempting to access and element that doesn't exist. Accessing an invalid sequence elment can lead to disastrous results because it's possible to write over critical data in your computer's memory. By doing this, you can crash your program, so take care when using the subscripting operator
+
+- One can loop over `string` objects as for any sequence, e.g. the below example which prints out every character in the string individually
+  - Observe the use of `phrase.size()` to iterate over the full bounds
+
+```cpp
+for (unsigned int i = 0; i <= phrase.size(); ++i) {
+    cout << "Character at position" << i << "is: " << phrase[i] << endl;
+}
+```
+
+>[!NOTE]
+>Iterating through a sequence is a powerful and often used technique in games. You might for example, iterate through hundreds of individual units in a strategy game, updating their status and order. Or you might iterate through the list of vertices of a 3D model to apply some geometric transformation
+
+### Using the `find()` Member Function
+
+- The `string` member function `find` checks if a *string* contains a *substring*
+  - `find` returns the index of the first occurrence of the *substring* in the *string*
+  - If the *substring* **does not exist** in *string* the special constant `string::npos` is returned
+    - `string::npos` represents the largest possible size of a `string` object, so it is not a valid index.
+    - Semantically means a position that cannot exist
+
+>[!TIP]
+> When using `find()`, you can supply an optional argument that specifies a character number for the program to start looking for the substring. The following line will start looking for the string literal `"eggplant"` beginning at position $5$ in the `string` object `phrase`.
+
+### Using the `erase()` Member Function
+
+- `erase()` removes a specified *substring* from a `string` object
+- One call is to specify the beginning position and the length of the *substring* e.g. `phrase.erase(4 5);` which erases the *substring* of length $5$ starting at position $4$
+- Another call is to supply the beginning position
+  - The beginning position and all susequent characters are erased e.g. `phrase.erase(4)`
+- If `erase` is called with no arguments the entire string is erased and becomes the empty `string`, `""`.
+
+### Using the `empty()` Member Function
+
+- `empty()` returns a *boolean* value indicating if the string is *empty* (`true`) or *non-empty* (`false`)
+
 ## Summary
 
 - The `for` loop lets you repeat a section of code. In a `for` loop, you can provide an initialisation statement, an expression to test, and an action to take after each loop iteration
