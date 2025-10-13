@@ -303,7 +303,7 @@ for (int i = 0; i < numItems; ++i) {
 #### Accessing Member Functions of an Array Element
 
 - Recall you can access an array element with the selection operator, e.g. `inventory[0]` selects the first element
-- If the member is an object and has attached functions, we can use them as if `inventory[idx]` was the variable name 
+- If the member is an object and has attached functions, we can use them as if `inventory[idx]` was the variable name
   - e.g. `inventory[0].size()` calls the `size` function on `inventory[0]`, i.e. the number of characters in `inventory[0]`.
 
 #### Being Aware of Array Bounds
@@ -418,7 +418,6 @@ for (int i = 0; i <  ROWS; ++i) {
 - We use an `enum` to allow labeled names to assign semantic meaning to each array index
   - e.g. `words[1][HINT]` accesses the hint for the second word
   - `NUM_FIELDS` defaults to the number after `HINT` in this case $2$, which means (assuming we use default `enum` values), `NUM_FIELDS` is the number of elements in the `enum` excluding itself
-
 
 ```cpp
 enum fields {WORD, HINT, NUM_FIELDS}
