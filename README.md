@@ -6,26 +6,53 @@ I started this repository as a way to mix up working through some more challengi
 
 ## Structure
 
-This repository has been broken down by Chapter. Each Chapter contains a markdown file containing notes as well as an index for code fragments. Code fragments are subdivided into
-
-1. Examples - Code fragments provided by the books
-2. Exercises - Solutions to Exercises
+This repository has been broken down by Chapter. Each Chapter contains a markdown file following the following structure,
 
 Each Chapters markdown file is broken down into
 
 1. *Examples* - Links and descriptions of code fragments provided by the books
 2. *Exercises*
-    1. **Discussion Questions and Answers**
+    1. **Discussion Questions and Answers** - Contains the discussion question, and an answer. Some of these are personal opinion and taste and you should consider your own reponse too
     2. **Code Examples** - Contains a description of the exercise, a link to a code implementation and an explanation of the solution
 3. *Notes* - Short abbreviated notes from the main body of the chapter
 4. *Summary* - Summary dot points provided at the end of a chapter
 5. *Questions and Answers* - Provided Questions and Answers from the chapter
 
+In addition, the book often contains asides according to a series of classifications. To make these stand out in the notes like the book, we have used github-flavoured markdown alerts. Since the translation is not one to one with the terminally of the book we use the rough translation,
+
+- *Hint* - Good ideas that will help you become a better programmer
+
+>[!WARNING]
+>A hint that *warns* about potential poor practice
+
+or,
+>[!TIP]
+>A hint that *encourages* potential good practice
+
+or,
+>[!IMPORTANT]
+>A hint that falls into neither category
+
+- *Trap* - These point out areas where its easy to make a mistake
+
+>[!CAUTION]
+>Traps use the caution label
+
+- *Trick* - These suggest techniques that will make your life as a game programmer easier
+
+>[!TIP]
+>Tricks, similar to helpful *hints* use the **tip** action
+
+- *Real World* - These are facts about the real world of game programming
+
+>[!NOTE]
+> Comments about the *Real World* game programming industry use the **note** action
+
 ## Content
 
 1. [Chapter 1](./Chapter1/Chapter1.md) - Types Variables and Standard I/O: [Lost Fortune](./Chapter1/Chapter1.md#major-project-lost-fortune)
 2. [Chapter 2](./Chapter2/Chapter2.md) - Truth, Branching and the Game Loop: [Guess My Number](./Chapter2/Chapter2.md#major-project-guess-my-number)
-3. [Chapter 3](./Chapter3/Chapter3.md) - For Loops, Strings and Arrays: Word Jumble
+3. [Chapter 3](./Chapter3/Chapter3.md) - For Loops, Strings and Arrays: [Word Jumble](./Chapter3/Chapter3.md#major-project-word-jumble)
 4. [Chapter 4](./Chapter4/Chapter4.md) - The Standard Template Library: Hangman
 5. [Chapter 5](./Chapter5/Chapter5.md) - Functions: Mad Lib
 6. [Chapter 6](./Chapter6/Chapter6.md) - References: Tic-Tac-Toe
