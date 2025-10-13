@@ -149,9 +149,9 @@ Because the test expression in this loop is the empty statement, the loop will c
     - Provides member functions e.g. length and character substitution
     - `strings` also defined to work intuitively with specific *operators*
 
-### Example [String Tester](#string-tester)
+#### Example [String Tester](#string-tester)
 
-### Creating `string` objects
+#### Creating `string` objects
 
 - There are several methods to create a `string` in C++
 
@@ -165,7 +165,7 @@ string word3(3, '!');
 - The second creates a string `word2` by wrapping the desired *string literal* in parentheses using a function call syntax
 - The final creates a string `word3` by using a function call syntax with a *number* denoting the string length, followed by the character `'!'` which is repeated to the desired length to give the string `"!!!"`
 
-### Concatenating `string` Objects
+#### Concatenating `string` Objects
 
 - `strings` can be *concatenated* using the *addition* operator
 
@@ -176,7 +176,7 @@ string phrase = word1 + " " + word2 + word3;
 - The above code creates the string, `"Game Over!!!"`
 - `+` which is normally mathematical addition has been *overloaded* to mean concatenation
 
-### Using the `size()` Member Function
+#### Using the `size()` Member Function
 
 - `string` has the member function `size` which returns the size (number of characters) in the string.
 - member functions are called with the `object.member_function()` syntax
@@ -184,7 +184,7 @@ string phrase = word1 + " " + word2 + word3;
 >[!TIP]
 >`string` objects also have a member function `length()`, which, just like `size()`, returns the number of characters in the `string` object.
 
-### Indexing a `string` object
+#### Indexing a `string` object
 
 - Individual sequence elements of a `string` can be accessed using *index notation* e.g. `phrase[0]` returns the first character in the string `phrase`
   - **Note**: C++ sequences are $0$-indexed, i.e. the first index is $0$
@@ -209,7 +209,7 @@ for (unsigned int i = 0; i <= phrase.size(); ++i) {
 >[!NOTE]
 >Iterating through a sequence is a powerful and often used technique in games. You might for example, iterate through hundreds of individual units in a strategy game, updating their status and order. Or you might iterate through the list of vertices of a 3D model to apply some geometric transformation
 
-### Using the `find()` Member Function
+#### Using the `find()` Member Function
 
 - The `string` member function `find` checks if a *string* contains a *substring*
   - `find` returns the index of the first occurrence of the *substring* in the *string*
@@ -220,7 +220,7 @@ for (unsigned int i = 0; i <= phrase.size(); ++i) {
 >[!TIP]
 > When using `find()`, you can supply an optional argument that specifies a character number for the program to start looking for the substring. The following line will start looking for the string literal `"eggplant"` beginning at position $5$ in the `string` object `phrase`.
 
-### Using the `erase()` Member Function
+#### Using the `erase()` Member Function
 
 - `erase()` removes a specified *substring* from a `string` object
 - One call is to specify the beginning position and the length of the *substring* e.g. `phrase.erase(4 5);` which erases the *substring* of length $5$ starting at position $4$
@@ -228,9 +228,140 @@ for (unsigned int i = 0; i <= phrase.size(); ++i) {
   - The beginning position and all susequent characters are erased e.g. `phrase.erase(4)`
 - If `erase` is called with no arguments the entire string is erased and becomes the empty `string`, `""`.
 
-### Using the `empty()` Member Function
+#### Using the `empty()` Member Function
 
 - `empty()` returns a *boolean* value indicating if the string is *empty* (`true`) or *non-empty* (`false`)
+
+### Using Arrays
+
+- Arrays provide a mechanism to work with a sequence of any elements of *any* type
+- Arrays can store *fundamental* types e.g. `int`, or *programmer defined* types e.g. *items in a characters inventory*
+
+#### Example: [Hero's Inventory](#heros-inventory-10)
+
+#### Creating Arrays
+
+- Often good to define a constant for the size of an array
+- Declaration follows the same as any other variable
+  i.e. `type name[size];`
+
+>[!Important]
+>You can initialise an array with values when you declare it by providing an *initiliser list* (a sequence of elements seperated by commas and surrounded by curly braces). Here's an example:
+>
+>```cpp
+>   string inventory[MAX_ITEMS] = {"sword", "armour", "shield"};
+>```
+>
+>The preceding code declares an array of `string` objects, `inventory`, that has a size of `MAX_ITEMS`. The first three elements of the array are initialised to `"sword"`, `"armour"`, and `"shield"`.
+>
+>If you omit the number of elements when using initialiser list, the array will be created with a size equal to the number of elements in the list. Here's an example:
+>
+>```cpp
+>   string inventory[] = {"sword", "armour", "shield"};
+>```
+>
+>Because there are three elements in the initialiser list, the preceding line creates an array, `inventory`, that is three elements in size. Its elements are `"sword"`, `"armour"`, and `"shield"`.
+
+#### Example: [Hero's Inventory - Initialiser List](#heros-inventory-20)
+
+#### Indexing Arrays
+
+- Arrays can be indexed like strings using the subscripting operator (`[]`)
+- You can add, elements to an array using the subscripting operator
+
+```cpp
+int numItems = 0;
+inventory[numItems++] = "sword";
+inventory[numItems++] = "armour";
+inventory[numItems++] = "shield";
+```
+
+- `numItems` counts the number of items in the `inventory` array.
+  - It can also be viewed as the *next free index* in `inventory`
+  - Using the *postfix* **increment** operator lets us add items while keeping the `numItems` as the number of items in one operation
+    - If we were removing items the *prefix* **decrement** operator lets us perform the operation in reverse (i.e. decrements `numItems` to the last occupied index then performs the edit to the array)
+- It is easy to increment over arrays
+
+```cpp
+cout << "Your items:\n";
+for (int i = 0; i < numItems; ++i) {
+    cout << inventory[i] << endl;
+}
+```
+
+- Arrays elements can also be reassigned like strings e.g. `inventory[0] = "battle axe"`
+
+>[!CAUTION]
+>Array indexing begins at $0$, just as you saw with `string` objects. This means that the following code defines a five-element array:
+>
+>```cpp
+>int highScores[5]
+>```
+>
+>Valid position numbers are $0$ through to $4$, inclusive. There is no element `highScores[5]`! An attempt to access `highScores[5]` could lead to a crash or other *undefined behaviour*.
+
+#### Accessing Member Functions of an Array Element
+
+- Recall you can access an array element with the selection operator, e.g. `inventory[0]` selects the first element
+- If the member is an object and has attached functions, we can use them as if `inventory[idx]` was the variable name 
+  - e.g. `inventory[0].size()` calls the `size` function on `inventory[0]`, i.e. the number of characters in `inventory[0]`.
+
+#### Being Aware of Array Bounds
+
+- Arrays have fixed size
+  - This size is not explicitly stored in the program
+  - Typically an integer constant or integer is created to track the array size
+- Accessing an array outside of its bounds in *undefined behaviour* which means the program can do anything, (often crashing but worse it can access memory it shouldn't which is a common cause of security errors)
+- One should always establish *bounds checking*
+  - Either use surrounding code to enforce that any accessed bound is valid, or
+  - Check the array is valid before we index
+
+#### Understanding C-Style Strings
+
+- Before `string` objects, strings were represented as character arrays terminated by a *null character* or *null terminator*
+  - These are called *C-style strings* since it derives from the C language
+- You can declare and initialise *C-style strings*
+
+```cpp
+char phrase[] = "Game Over!!!";
+```
+
+- **Note:** The null character is implicit by the enclosing `""`, the character array `phrase` has $13$ elements, but $12$ that represent the actual character sequence
+- You can also specify the array size, e.g.
+
+```cpp
+char phrase[81] = "Game Over!!!";
+```
+
+- The above creates a *char* array with $81$ characters, i.e. it can hold $80$ printable characters and $1$ null character
+- C-strings don't have member functions, but the file `cstring` in the standard library contains functions for working with C-style strings
+- `string` objects should work seamlessly with C-style strings e.g. the following are all valid
+
+```cpp
+string word1 = "Game"
+char word2[] = " Over"
+
+string phrase = word1 + word2;
+
+if (word1 != word2) {
+    cout << "word1 and word2 are not equal.\n";
+}
+
+if (phrase.find(word2) != string::npos) {
+    cout << "word2 is contained in phrase.\n";
+}
+```
+
+- Can contenate `string` objects and C-style strings, result is a `string` object
+- can compare `string` objects and C-style strings using relational operators
+- Can use C-style strings as arguments to `string` object member functions
+
+- C style strings are functionally arrays with the same shortcomings, e.g. fixed size etc.
+- **Use `string` whenever possible!**
+
+### Using Multidimensional Arrays
+
+
 
 ## Summary
 
