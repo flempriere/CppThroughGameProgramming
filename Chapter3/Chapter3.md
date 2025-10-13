@@ -361,7 +361,167 @@ if (phrase.find(word2) != string::npos) {
 
 ### Using Multidimensional Arrays
 
+- Sometimes it is much more intuitive to represent an object as multi-dimensional, e.g. a $8 \times 8$ chessboard may be more naturally represented as a $2$-D structure than a $64$ element linear array
 
+#### Example: [Tic-Tac-Toe Board](#tic-tac-toe)
+
+#### Creating Multidimensional Arrays
+
+- Multidimensional arrays declarations can be considered as writing an `array of arrays`, i.e. we write a series of `[]` to specify the size, and use nested initiliser lists to initialise, e.g.
+
+```cpp
+char board[ROWS][COLUMNS] = {{'O', 'X', 'O'},
+                             {' ', 'X', 'X'},
+                             {'X', 'O', 'O'}};
+```
+
+>[!TIP]
+>It's possible to simply declare a multidimensional array without initialising it. Here's an example:
+>
+>```cpp
+>char chessboard[8][8];
+>```
+>
+>The preceding code declares an $8 \times 8$, two-dimensional character array, `chessBoard`. By the way, multidimensional arrays aren't required to have the same size for each dimension. The following is a perfectly valid declaration for a game map represented by individual characters:
+>
+>```cpp
+>char map[12][20];
+>```
+
+#### Indexing Multidimensional Arrays
+
+- To index an individual element you must index each dimension using the indexing operator `[]`, e.g. `board[1][0]` accesses the first element of the second row
+- You can assign to individual elements the same as you would for a linear array
+- There is a simple convention for iterating over a $2$-D array,
+
+```cpp
+for (int i = 0; i <  ROWS; ++i) {
+    for (int j = 0; j < COLUMNS; ++j) {
+        cout << board[i][j];
+    }
+}
+```
+
+### Introducing [Word Jumble](#major-project-word-jumble)
+
+- Game where a player has to guess a word with the letters arranged randomly
+- In our game the computer will generate the word and perform the jumble
+  - We also let the player ask for a hint
+
+>[!NOTE]
+>Even though puzzle games don't usually break into the top-te list of games, major companies still publish them year after year. Why? For one simple reason: They're profitable. Puzzle games, while not usually blockbusters, can still sell well. There are many gamers out there (casual and hardcore) who are drawn to the zen of a well-designed puzzle game. And puzzle games cost much less to produce than the high-profile games that require large production teams and years of development time
+
+#### Picking a Word to Jumble
+
+- Each word is effectively a *word*, *hint* pair, which can naturally be stored in a two-dimensional array associating each word and hint.
+- We then store the words and hints in a `const string` array, `WORDS`, since we don't ever want to modify them. This array is effectively our dictionary
+- We use an `enum` to allow labeled names to assign semantic meaning to each array index
+  - e.g. `words[1][HINT]` accesses the hint for the second word
+  - `NUM_FIELDS` defaults to the number after `HINT` in this case $2$, which means (assuming we use default `enum` values), `NUM_FIELDS` is the number of elements in the `enum` excluding itself
+
+
+```cpp
+enum fields {WORD, HINT, NUM_FIELDS}
+const string WORDS[NUM_WORDS][NUM_FIELDS] = {
+  {"wall", "do you feel you're banging your head against something"},
+  {"glasses", "These might help you see the answer"},
+  {"laboured", "Going slowly, is it?"},
+  {"persistent", "Keep at it"},
+  {"jumble", "It's what the game is all about"}
+}
+```
+
+>[!TIP]
+>You can list a final enumerator in an enumeration as a convenient way to store the number of elements, e.g.
+>
+>```cpp
+>enum difficulty {EASY, MEDIUM, HARD, NUM_DIFF_LEVELS}
+>cout << "There are" << NUM_DIFF_LEVELS << " difficulty levels";
+>```
+>
+>In the previous code `NUM_DIFF_LEVELS` is $3$, the exact number of difficulty levels in the enumeration. As a result, the second line of code displays the message `"There are 3 difficulty levels"`
+
+- A word is picked using the standard random selection idiom to select a *row* / word index in the array
+  - We then perform the assignments `string theWord = WORDS[choice][WORD]; string theHint = WORDS[choice][HINT]`
+  - This is purely to avoid having to do the lengthly multidimensional array references everywhere
+
+#### Jumbling the Word
+
+- To jumble the word we need to make a *mutable* copy, since the word dictionary is `const` qualified.
+  - `string jumble = theWord;` creates a mutable copy
+- To jumble we iterate over the length of the string, and each time swap two random elements of `jumble`
+
+```cpp
+string jumble = theWord;
+int length = jumble.size();
+for (int i = 0; i < jumble.size(); i++) {
+    int index1 = (rand() % length);
+    int index2 = (rand() % length);
+    char temp = jumble[index1] //swap
+    jumble[index1] = jumble[index2];
+    jumble[index2] = temp;
+}
+```
+
+#### Welcoming the Player
+
+- Prints out a simple menu for the player, including a quit option
+
+>[!WARNING]
+>As enthralling as you think your game is, you should always provide a way for the player to exit it.
+
+#### Entering the Game Loop
+
+- Word jumble has a simple game loop
+- *prompt* the player to guess
+- While the player has not guessed the word (or quit), we
+  - Read in the player guess
+  - *if* its *hint* we offer the hint,
+  - *else* inform the player the guess is wrong
+  - *reprompt* the player for a new guess
+- Once the player has guessed we congratulate them,
+- Then (or if the player quits) thank them for playing
+- Exit
+
+The game loop flowchart is
+
+```mermaid
+---
+title: Word Jumble Game Loop
+config:
+    flowchart:
+        htmlLabels: false
+---
+
+flowchart TD
+selectWord["Pick a random word"]
+jumbleWord["Jumble the word"]
+printMenu["Print the opening menu"]
+input["Get the Player's guess"]
+Guess@{shape: diam, label: "Guessed either 
+the word OR 
+quit?"}
+GuessedWord@{shape: diam, label: Guessed the word?}
+congratulate["Congratulate the Player"]
+goodbye["Say goodbye to the Player"]
+GuessedHint@{shape: diam, label: "Asked for hint?"}
+displayHint["Display hint"]
+incorrectGuess["Tell player guess is wrong"]
+
+selectWord-->jumbleWord
+jumbleWord-->printMenu
+printMenu-->input
+input-->Guess
+Guess-->|Yes|GuessedWord
+GuessedWord-->|Yes|congratulate
+GuessedWord-->|No|goodbye
+congratulate-->goodbye
+Guess-->|No|GuessedHint
+GuessedHint-->|Yes|displayHint
+GuessedHint-->|No|incorrectGuess
+displayHint-->input
+incorrectGuess-->input
+```
 
 ## Summary
 
