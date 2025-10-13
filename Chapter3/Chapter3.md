@@ -538,7 +538,7 @@ incorrectGuess-->input
 
 ## Questions and Answers
 
-1. Which is better, a `while` loop or a `for` loop
+1. Which is better, a `while` loop or a `for` loop?
     - Neither is inherently better than the other. Use the loop that best fits the usecase
 2. When might it be better to use a `for` loop than a `while` loop?
     - You can create a `while` loop to do the job of any `for` loop; however, there are some cases were a `for` loop is more compact. Those include counting and iterating through a sequence

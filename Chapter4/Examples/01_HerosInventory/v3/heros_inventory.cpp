@@ -1,5 +1,5 @@
 // Hero's Inventory 3.0
-// Demonstrates vectors
+// Demonstrates vectors and iterators
 
 #include <iostream>
 #include <string>
