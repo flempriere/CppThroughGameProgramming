@@ -56,20 +56,22 @@ int main() {
                     cout << "Could not find that game!" << endl;
                 }
                 break;
-            case HELP:
-                cout << "Options:\n\n";
-                cout << "1 - List all Games\n";
-                cout << "2 - Add a Game\n";
-                cout << "3 - Remove a Game\n";
-                cout << "4 - See the Menu again\n";
-                cout << "5 - Quit\n";
-                cout << "Warning: Titles must be one word!\n";
-                break;
             case QUIT:
                 break;
             default:
                 cout << "Invalid option!" << endl;
-        }
+                [[fallthrough]];    // fallthrough attribute tells the compiler 
+                                    // the missing break here is intentional
+            case HELP:
+              cout << "Options:\n\n";
+              cout << "1 - List all Games\n";
+              cout << "2 - Add a Game\n";
+              cout << "3 - Remove a Game\n";
+              cout << "4 - See the Menu again\n";
+              cout << "5 - Quit\n";
+              cout << "Warning: Titles must be one word!\n";
+              break;
+            }
     } while(option != QUIT);
     
     return 0;
