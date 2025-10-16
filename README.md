@@ -53,7 +53,7 @@ or,
 1. [Chapter 1](./Chapter1/Chapter1.md) - Types Variables and Standard I/O: [Lost Fortune](./Chapter1/Chapter1.md#major-project-lost-fortune)
 2. [Chapter 2](./Chapter2/Chapter2.md) - Truth, Branching and the Game Loop: [Guess My Number](./Chapter2/Chapter2.md#major-project-guess-my-number)
 3. [Chapter 3](./Chapter3/Chapter3.md) - For Loops, Strings and Arrays: [Word Jumble](./Chapter3/Chapter3.md#major-project-word-jumble)
-4. [Chapter 4](./Chapter4/Chapter4.md) - The Standard Template Library: Hangman
+4. [Chapter 4](./Chapter4/Chapter4.md) - The Standard Template Library: [Hangman](./Chapter4/Chapter4.md#major-project-hangman)
 5. [Chapter 5](./Chapter5/Chapter5.md) - Functions: Mad Lib
 6. [Chapter 6](./Chapter6/Chapter6.md) - References: Tic-Tac-Toe
 
