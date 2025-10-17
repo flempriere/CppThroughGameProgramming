@@ -74,9 +74,11 @@ The below block diagrams illustrated with mermaid demonstrate the difference
 ```mermaid
 
 block
- block:figure:1
     columns 5
-    title("Title"):5
+    space:2
+    title("Example Loop Behaviour for even sized Array")
+    space:2
+    space:5
     block:array:4
         0 ["0"]
         1 ["1"]
@@ -96,13 +98,46 @@ block
     iter_one-->2
     end_iter-->end_arr
     iter_two-->end_arr
-end
 
-class figure BG
+class title BG
 classDef BG stroke:transparent, fill:transparent
 ```
 
-- In the even length case above both `iter` and `end` eventually point to the end of the array and the loop terminates
+- In the even length case above `iter` and `end` eventually reference the same point and the loop terminates
+
+```mermaid
+
+block
+    columns 5
+    space:2
+    title("Example Loop Behaviour for odd sized Array")
+    space:2
+    space:5
+    block:array:3
+        0 ["0"]
+        1 ["1"]
+        2 ["3"]
+    end
+    end_arr [" "]
+    off_arr [" "]
+    space:5
+    begin_iter ["begin"]
+    space
+    iter_one ["iter after one loop iteration"]
+    end_iter ["end"]
+    space:10
+    iter_two ["iter after two loop iterations"]
+    begin_iter-->0
+    iter_one-->2
+    end_iter-->end_arr
+    iter_two-->off_arr
+
+
+class title BG
+classDef BG stroke:transparent, fill:transparent
+```
+
+- In the odd length case above `iter` skips past `end` and the loop never terminates
 
 [Exercise 4.3](./Exercises/Ex4_3/word_jumble_pseudo.md)
 
