@@ -67,7 +67,42 @@ for (iter = scores.begin(); iter != scores.end(); ++iter) {
 }
 ```
 
-Recall that the access the value an iterator refers to you have to use the *derefence operator* (`*`). Instead `iter++` moves the iterator to the next element. This the outcome that effectively the iterator is moved forward *twice* each time around the loop. If the number of elements in score is odd then the loop terminates, but `scores` is left unchanged. **Worse** behaviour is observed if the number of elements is even. Then the indices at each loop iteration are $0, 2, 4, \ldots, 2k$ etc, this means (since the final index would be odd-valued) that the program will skip past `scores.end()` without testing and so never fail the loop condition hence causing an *infinite loop*.
+Recall that the access the value an iterator refers to you have to use the *derefence operator* (`*`). Instead `iter++` moves the iterator to the next element. This the outcome that effectively the iterator is moved forward *twice* each time around the loop. If the number of elements in score is even then the loop terminates, but `scores` is left unchanged. **Worse** behaviour is observed if the number of elements is odd. Then the indices at each loop iteration are $0, 2, 4, \ldots, 2k$ etc, this means (since the final index would be odd-valued) that the program will skip past `scores.end()` without testing and so never fail the loop condition hence causing an *infinite loop*.
+
+The below block diagrams illustrated with mermaid demonstrate the difference
+
+```mermaid
+
+block
+ block:figure:1
+    columns 5
+    title("Title"):5
+    block:array:4
+        0 ["0"]
+        1 ["1"]
+        2 ["3"]
+        3 ["4"]
+    end
+    end_arr [" "]
+    space:5
+    begin_iter ["begin"]
+    space
+    iter_one ["iter after one loop iteration"]
+    space
+    end_iter ["end"]
+    space:9
+    iter_two ["iter after two loop iterations"]
+    begin_iter-->0
+    iter_one-->2
+    end_iter-->end_arr
+    iter_two-->end_arr
+end
+
+class figure BG
+classDef BG stroke:transparent, fill:transparent
+```
+
+- In the even length case above both `iter` and `end` eventually point to the end of the array and the loop terminates
 
 [Exercise 4.3](./Exercises/Ex4_3/word_jumble_pseudo.md)
 
