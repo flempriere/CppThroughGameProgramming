@@ -754,7 +754,6 @@ cout << "\nSo far, the word is:\n" << soFar << endl;
   - Append the new guessed letter to the string with string concatenation
   - Update the game state
 
-
 ```cpp
 char guess;
 cout << "\n\nEnter your guess: ";
