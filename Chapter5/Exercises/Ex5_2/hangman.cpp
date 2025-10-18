@@ -12,6 +12,7 @@
 
 using namespace std;
 
+string createWord();
 void displayGameState(int wrong, string used, string soFar);
 char getGuess(string used);
 bool guessIsInWord(char guess, string word);
@@ -21,16 +22,7 @@ const int MAX_WRONG = 8; // maximum number of incorrect guesses allowed
 
 int main() {
 
-    vector<string> words; // collection of possible words to guess;
-    words.push_back("GUESS");
-    words.push_back("HANGMAN");
-    words.push_back("DIFFICULT");
-
-    random_device rd;
-    mt19937 rng(rd());
-    shuffle(words.begin(), words.end(), rng);
-
-    const string THE_WORD = words[0]; //word to guess
+    const string THE_WORD = createWord();
     int wrong = 0; //number of incorrect guesses
     string soFar(THE_WORD.size(), '-'); // word guessed so far
     string used = "";
@@ -67,6 +59,19 @@ int main() {
     cout << "\nThe word was " << THE_WORD << endl;
 
     return 0;
+}
+
+string createWord() {
+    vector<string> words; // collection of possible words to guess;
+    words.push_back("GUESS");
+    words.push_back("HANGMAN");
+    words.push_back("DIFFICULT");
+
+    random_device rd;
+    mt19937 rng(rd());
+    shuffle(words.begin(), words.end(), rng);
+    
+    return words[0];
 }
 
 void displayGameState(int wrong, string used, string soFar) {
