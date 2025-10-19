@@ -358,7 +358,7 @@ return-type name(param-type param-name, ...) {
 
 #### Passing Values to Parameters
 
-- Function values are passed in the parentheses, in the order they defined, e.g. the below code snippet calls `askYesNo2` with a value of `"Do you wish to save your game?"` passed to the parameter `question` 
+- Function values are passed in the parentheses, in the order they defined, e.g. the below code snippet calls `askYesNo2` with a value of `"Do you wish to save your game?"` passed to the parameter `question`
 
 ```cpp
 askYesNo2("Do you wish to save your game?")
