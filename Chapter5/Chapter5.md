@@ -279,6 +279,220 @@ return-type name(param-type param-name, ...) {
 }
 ```
 
+>[!CAUTION]
+>A function definition much match its prototype on return type and function name, otherwise a compile error is generated
+
+### Calling Functions
+
+- Functions are called the same way as those we've already worked with, e.g. `function(params)`
+- Control jumps to the function
+  - The function then executes
+  - After the function finishes control returns to the calling code
+
+### Understanding Abstraction
+
+- Functions are a form of implementing *abstraction*
+- Abstraction helps you focus on the big picture
+  - i.e. a function call is an interface / contract
+    - We supply a given set of arguments (*preconditions*)
+    - The function does some work, maintaining some properties (*invariants*)
+    - Side effects occur or values are returned (*postconditions*)
+    - **Note:** Preconditions, invariants and postconditions are a bit more complicated than this but this the general idea.
+  - We can focus on what we have to send to the function, and what it does, without having to focus on the *how* or the internal function implementation
+
+### Using Parameters and Return Values
+
+- You can provide a function values (*parameters*)
+- You can receive data back (*return values*)
+- e.g. `toupper(char c)` takes in a character, and returns the uppercase version
+- This allows functions to *communicate*
+
+### Example [Yes or No](#yes-or-no)
+
+### Returning a Value
+
+- To return a value you need to specify a *return type*
+- The function must then return a value of that type
+
+#### Specifying a Return Type
+
+- e.g. `char askYesNo1();` defines a function `askYesNo1` that returns a `char`
+
+#### Using the `return` statement
+
+- A value is returned through the `return` statement with the syntax `return value;`
+- Return value much match the type of the function definition
+- A function ends whenever it hits a `return` statement
+  - A function can have multiple `return` points
+
+>[!TIP]
+>You don't have to return a value with a `return` statement (unless the function has a *return-type*.) You can use `return` by itself in a function that returns no value (one that indicates `void` as its return type) to end the function
+
+#### Using a Returned Value
+
+- Function values can be thought of as replacing the call `function(values)` with the returned value.
+- If you want to keep a function's return value then you need to assign it to a variable
+
+### Accepting Values into Parameters
+
+- You can send functions values that it accepts into its parameters
+
+#### Specifying Parameters
+
+- Parameters are declared in the prototype, e.g. `char askYesNo2(string question)` declares a function `askYesNo2` returning a char and taking in a `string`
+  - Example accepts a string and calls that parameter `question`
+
+>[!WARNING]
+>You don't have to use parameter names in a prototype; all you have to include are the parameter types. For example, the following is a perfectly valid prototype that declares `askYesNo2`, a function with one `string` parameter that returns a `char`
+>
+>```cpp
+>char askYesNo2(string);
+>```
+>
+>Even though you don't have to use parameter names in prototypes, it's a good idea to do so. It makes your code clearer, and it's worth the minor effort
+
+- Unlike prototypes, you must specify parameter names in a function definition
+
+>[!CAUTION]
+>The parameter types specified in a function prototype must match the parameter types listed in the function definition. If they don't you'll generate a compile error
+
+#### Passing Values to Parameters
+
+- Function values are passed in the parentheses, in the order they defined, e.g. the below code snippet calls `askYesNo2` with a value of `"Do you wish to save your game?"` passed to the parameter `question` 
+
+```cpp
+askYesNo2("Do you wish to save your game?")
+```
+
+#### Using Parameter Values
+
+- Parameters are treated like variables, just refer to their name
+
+>[!IMPORTANT]
+> Actually, there's a little more going on behind the scenes here. When the string literal `"Do you wish to save your game?"` is passed to `question`, a `string` object equal to the string literal is created and the `string` object gets assigned to `question`
+
+### Understanding Encapsulation
+
+- No variable created in a function, including parameters can be accessed outside the function
+  - This is an example of *encapsulation*
+- Encapsulation keeps independent details of programs seperate by hiding or *encapsulating* the details
+  - Parameters and return values are the mechanisms of intercommunication
+  - Only the nessecary information is exchanged
+- Encapsulation is closely related to abstraction
+  - Encapsulation is a form of abstraction
+  - Abstraction = *don't worry about the details*
+  - Encapsulation = *hide the details*
+
+### Understanding Software Reuse
+
+- You can reuse functions in other programs, e.g. we could reuse `askYesNo` in every program that needed it
+
+>[!NOTE]
+>It's always a waste of time to reinvent the wheel, so *software reuse* (employed existing software and other elements in new projects), is a technique that game companies take to heart. The benefits of software reuse include
+>
+>- **Increased company productivity**: By reusing code and other elemnets that already exist, such as a graphics engine, game companies can get their projects done with less effort
+>- **Improved software quality**: If a game company already has a tested piece of code, such as a networking module, then the compnay can reuse the code with the knowledge that its bug free
+>- **Improved software performance**: Once a game company has a high-performance piece of code, using it again not only saves the company the trouble of reinventing the wheel, it saves then from reinventing a less, efficient one
+
+- You can reuse code by copying from one program to another
+- Another technique (seen in [Chapter 10](../Chapter10/Chapter10.md)) is to divide a project up into multiple files
+- An even more advanced technique (not covered here) is to package code up as *libraries*
+
+### Working with Scopes
+
+- A *scope* is where a variable can be seen in your program
+
+### Example [Scoping](#scoping)
+
+- When you use curly braces to open a block, you create a new *scope*
+  - This includes functions
+- Variables declared in a scope aren't visible outside of that scope
+- Variables declared inside a function are sometimes called *local variables*
+  - This includes variables in `main`
+- Variables in a lower scope may *shadow* variables in a higher scope if they share the same name.
+
+>[!CAUTION]
+>Although you can declare variables with the same name in a series of nested scopes, it's not a good idea because it can lead to confusion
+
+- Once a scope ends, all of the variables declared in that scope cease to exist
+  - Referred to as going *out of scope*
+
+>[!TIP]
+>Parameters act just like local variables in functions
+
+### Working with Nested Scopes
+
+- Nested scopes are created by nested curly braces
+
+>[!WARNING]
+>When you define variables inside `for` loops, `while` loops, `if` statements, and `switch` statements, these variables don't exist outside their structures. They act like variables declared in a nested scope. For example, in the following code, the variable `i` doesn't exist outside the loop
+>
+>```cpp
+>for (int i = 0; i < 10; ++i) {
+>   cout << i;    
+>}
+>// i doesn't exist outside the loop
+>```
+>
+>But beware; some older compilers don't properly implement this functionality of standard C++. The best thing to do is to use a modern compiler
+
+### Using Global Variables
+
+- *Global Variables* are variables that are accessible in any part of a program
+
+### Example [Global Reach](#global-reach)
+
+### Declaring Global Variables
+
+- Global variables are defined outside of any function in a program
+  - This includes `main`
+  - Must be declared before first use
+
+### Accessing Global Variables
+
+- Global variables can be accessed from anywhere
+
+#### Hiding Global Variables
+
+- Global variables can be shadowed like local variables with nested scopes
+  - The global variable can then not be accessed or changed
+
+>[!CAUTION]
+>Although you can declare variables in a function with the same name as a global variable, it's not a good idea because it can lead to confusion
+
+### Altering Global Variables
+
+- Since they can be accessed from anywhere this means they can be changed from anywhere
+
+### Minimising the Use of Global Variables
+
+- You should avoid using global variables
+- They create hidden dependencies between different parts of the codebase
+  - Makes it harder to keep track of state changes
+
+### Using Global Constants
+
+- *Global constants* i.e. declarations with the `const` keyword can make code clearer to read
+
+>[!CAUTION]
+>Just like with global barables, you can hide a global constant by declaring a local constant with the same name. However, you should avoid this because it can lead to confusion
+
+- Global constants help by removing *magic values*, embedded literal values in the code
+  - These are hard to change correct because say there is a $10$ in the program, but multiple constants with the same value $10$, without a semantic label, how do we know which constant this $10$ references
+  - They assign semantic meaning, when you come back to modify the code are you going to remember what a constant was supposed to represent?
+
+>[!CAUTION]
+>Just like with global variables, you can hide a global constant by declaring a local constant by declaring a local constant with the same name. However, you should avoid this because it can lead to confusion
+
+### Using Default Arguments
+
+- What happens if we write a function where a parameter is called with the same value almost all of the time?
+  - We can define a *default argument*, a value assigned if none is specified
+
+### Example: [Give Me a Number](#give-me-a-number)
+
+### Specifying Default Arguments
+
 ## Summary
 
 - Functions allow you to break up your programs in manageable chunks
