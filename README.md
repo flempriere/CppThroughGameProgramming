@@ -54,8 +54,8 @@ or,
 2. [Chapter 2](./Chapter2/Chapter2.md) - Truth, Branching and the Game Loop: [Guess My Number](./Chapter2/Chapter2.md#major-project-guess-my-number)
 3. [Chapter 3](./Chapter3/Chapter3.md) - For Loops, Strings and Arrays: [Word Jumble](./Chapter3/Chapter3.md#major-project-word-jumble)
 4. [Chapter 4](./Chapter4/Chapter4.md) - The Standard Template Library: [Hangman](./Chapter4/Chapter4.md#major-project-hangman)
-5. [Chapter 5](./Chapter5/Chapter5.md) - Functions: Mad Lib
-6. [Chapter 6](./Chapter6/Chapter6.md) - References: Tic-Tac-Toe
+5. [Chapter 5](./Chapter5/Chapter5.md) - Functions: [Mad Lib](./Chapter5/Chapter5.md#major-project-mad-lib)
+6. [Chapter 6](./Chapter6/Chapter6.md) - References: [Tic-Tac-Toe](./Chapter6/Chapter6.md#major-project-tic-tac-toe)
 
 ## Code Style
 
