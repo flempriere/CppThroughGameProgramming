@@ -248,9 +248,9 @@ Which version is better, is probably up to the individual in this case. Observe 
 
 - C++ like most languages let you declare new functions
 
-### Example [Instructions](#instructions)
+#### Example [Instructions](#instructions)
 
-### Declaring Functions
+#### Declaring Functions
 
 - Before being used, functions must be declared
 - *function prototypes* is a common way to do this
@@ -269,7 +269,7 @@ If the function does not return *anything* then we use the `void` return type
 >[!TIP]
 >Although you don't have to use prototypes, they offer a lot of benefits, not the least of which is making your code clearer
 
-### Defining Functions
+#### Defining Functions
 
 - A function is defined similar to its prototype, but with the function body providing an *implementation* of the function, e.g.
 
@@ -307,9 +307,9 @@ return-type name(param-type param-name, ...) {
 - e.g. `toupper(char c)` takes in a character, and returns the uppercase version
 - This allows functions to *communicate*
 
-### Example [Yes or No](#yes-or-no)
+#### Example [Yes or No](#yes-or-no)
 
-### Returning a Value
+#### Returning a Value
 
 - To return a value you need to specify a *return type*
 - The function must then return a value of that type
@@ -333,7 +333,7 @@ return-type name(param-type param-name, ...) {
 - Function values can be thought of as replacing the call `function(values)` with the returned value.
 - If you want to keep a function's return value then you need to assign it to a variable
 
-### Accepting Values into Parameters
+#### Accepting Values into Parameters
 
 - You can send functions values that it accepts into its parameters
 
@@ -402,7 +402,7 @@ askYesNo2("Do you wish to save your game?")
 
 - A *scope* is where a variable can be seen in your program
 
-### Example [Scoping](#scoping)
+#### Example [Scoping](#scoping)
 
 - When you use curly braces to open a block, you create a new *scope*
   - This includes functions
@@ -420,7 +420,7 @@ askYesNo2("Do you wish to save your game?")
 >[!TIP]
 >Parameters act just like local variables in functions
 
-### Working with Nested Scopes
+#### Working with Nested Scopes
 
 - Nested scopes are created by nested curly braces
 
@@ -440,15 +440,15 @@ askYesNo2("Do you wish to save your game?")
 
 - *Global Variables* are variables that are accessible in any part of a program
 
-### Example [Global Reach](#global-reach)
+#### Example [Global Reach](#global-reach)
 
-### Declaring Global Variables
+#### Declaring Global Variables
 
 - Global variables are defined outside of any function in a program
   - This includes `main`
   - Must be declared before first use
 
-### Accessing Global Variables
+#### Accessing Global Variables
 
 - Global variables can be accessed from anywhere
 
@@ -460,11 +460,11 @@ askYesNo2("Do you wish to save your game?")
 >[!CAUTION]
 >Although you can declare variables in a function with the same name as a global variable, it's not a good idea because it can lead to confusion
 
-### Altering Global Variables
+#### Altering Global Variables
 
 - Since they can be accessed from anywhere this means they can be changed from anywhere
 
-### Minimising the Use of Global Variables
+#### Minimising the Use of Global Variables
 
 - You should avoid using global variables
 - They create hidden dependencies between different parts of the codebase
@@ -489,9 +489,211 @@ askYesNo2("Do you wish to save your game?")
 - What happens if we write a function where a parameter is called with the same value almost all of the time?
   - We can define a *default argument*, a value assigned if none is specified
 
-### Example: [Give Me a Number](#give-me-a-number)
+#### Example: [Give Me a Number](#give-me-a-number)
 
-### Specifying Default Arguments
+#### Specifying Default Arguments
+
+- Specified in the prototype
+- Written as if a declaration and assignment
+- Parameters with default arguments must come after those without
+
+```cpp
+int askNumber(int high, int low = 1);
+```
+
+>[!CAUTION]
+>Once you specify a default argument in a list of parameters, you must specify default arguments for all remaining parameters. So the following prototype is valid:
+>
+>```cpp
+>void setDisplay(int height, int width, int depth = 32, bool fullscreen = true);
+>```
+>
+>while this one is illegal:
+>
+>```cpp
+>void setDisplay(int width, int height, int depth = 32, bool fullscreen);
+>```
+
+- Remember not to repeat the default argument in the function *definition*, e.g. the function definition for the above example is
+
+```cpp
+int askNumber(int high, int low) {
+    function-body
+}
+```
+
+#### Assigning Default Arguments to Parameters
+
+- If called without an argument for a default-argument specified parameter, the default is passed,
+  - e.g. the example from the previous section when called as `int number = askNumber(5)` is equivalent to `int number = askNumber(5, 1)`
+
+>[!CAUTION]
+>When you are calling a function with default arguments, once you omit an argument, you must omit arguments for all remaining parameters. For example, given the prototype,
+>
+>```cpp
+>void setDisplay(int height, int width, int depth = 32, bool fullScreen = true);
+>```
+>
+>a valid call to the function would be
+>
+>```cpp
+>setDisplay(1680, 1050);
+>```
+>
+>while an illegal call would be
+>
+>```cpp
+>setDisplay(1680, 1050, false);
+>```
+>
+>Logically we might understand that the `depth` parameter is being left as a default, but semantically by the order of parameters this reads as passing `false` to `depth` and leaving `fullScreen` default. Hence the ambiguity, and the unallowed behaviour
+
+#### Overiding Default Arguments
+
+- To override default arguments, simply provide a value for them, e.g. `number = askNumber(10, 5)`
+
+### Overloading Functions
+
+- Overloading refers to a multiple *functions* with the same *name* and *return-type* but *different* parameter lists.
+  - e.g. A 3d transform function on a set of vertices might have one version that supports `float` and other that supports `int`
+  - In C or a language without *overloading* we might have to call them, `3d_transform_float` and `3d_transform_int`.
+    - Overloading lets us refer to both functions as `3d_transform`
+
+#### Example: [Triple](#triple)
+
+#### Creating Overloaded Functions
+
+- To create an overloaded function, simply provide multiple definitions with identical names and varying parameter lists, e.g.
+
+```cpp
+int triple(int number);
+string triple(string text);
+```
+
+overloads the function `triple` to accept either `int` or `string`
+
+- Note, that here we also have different return types
+
+>[!CAUTION]
+>To implement function overloading, you need to write multiple definitions for the same function with different parameter lists. Notice that I didn't mention anything about return types. That's because if you write two function definitions in which only the return type is different, you'll generate a compile error. For example, you cannot have both of the following prototypes in a program
+>
+>```cpp
+>int Bonus(int);
+>int Bonus(int);
+>```
+
+#### Calling Overloaded Functions
+
+- Called the same way any function is
+  - Variant inferred from the supplied arguments
+
+### Inlining Functions
+
+- There's a small performance cost associated with calling a function
+  - At a high level this is because a program must *save* it's current environment, jump to the function, execute it, return the value and restore the environment
+- Cost typically minor
+  - Sometimes we write small one or two line functions for readability that are called frequently (e.g. a `swap` function)
+- *inlining* can speed this up by replacing the function call with a copy of the function code everywhere its called at compile time
+  - This removes the need for a jump
+
+#### Example: [Taking Damage](#taking-damage)
+
+#### Specifying Functions for Inlining
+
+- Mark a function for inlining by placing `inline` before the definition e.g.
+
+```cpp
+inline int radiation(int health)
+```
+
+>[!IMPORTANT]
+>When you inline a function, you really make a request to the compiler, which has the ultimate decision on whether to inline the function. If your compiler thinks that inlining won't boost performance, it won't inline the function
+
+#### Calling Inlined Functions
+
+- Behaviour just like a normal function
+  - Inlining happens at compile time, so doesn't impact written code
+  - If the compiler inlines, the function call is *elided* and the code is placed at the call location
+
+>[!NOTE]
+>Although obsessing about performance is a game programmer's favourite hobby, there's a danger in focusing too much on speed. In fact, the approach many developers take is to first get their game programs working well before they tweak for small performance gains. At that point, programmers will *profile* their code by running a utility (a profiler) that analyses where the game program spends its time. If a programmer sees bottlenecks, he or she might consider hand optimisations such as function inlining
+
+### Introducing the Mad Lib Game
+
+- The Mad lib game asks for the User's help in creating a story
+  - User supplies the name of a person, a plural noun, a number and a verb
+  - A personalised story is then told
+- This game has a very linear game loop
+
+```mermaid
+---
+title: Mad Lib Game Loop
+config:
+    flowchart:
+        htmlLabels: false
+---
+
+flowchart TD
+
+getWords["Get words and number 
+from the player"]
+tellStory["Tell the story
+filling in the blanks"]
+
+getWords-->tellStory
+```
+
+- The goal is to focus on the use of functions to condense the code
+
+#### Setting up the Program
+
+- We want to ask the player for `string` and `int`
+  - We then want to tell the story using the parameters
+- Our function list becomes
+
+```cpp
+string askText(string prompt);
+int askNumber(string prompt);
+void tellStory(string name, string noun, int number, string bodyPart, string verb);
+```
+
+#### The `main()` Function
+
+- We use `askText` to get any `string` values needed from the player
+- We use `askNumber` to get an `int` value
+- These are then passed through to `tellStory` to give the value
+- The `main` function itself ends up being a small function mediating the three functions
+
+```cpp
+int main() {
+    cout << "Welcome to Mad Lib.\n\n";
+    cout << "Answer the following questions to help create a new story.\n";
+
+    string name = askText("Please enter a name: ");
+    string noun = askText("Please enter a plural noun: ");
+    int number = askNumber("Please enter a number: ");
+    string bodyPart = askText("Please enter a body part: ");
+    string verb = askText("Please enter a verb: ");
+    tellStory(name, noun, number, bodyPart, verb);
+
+    return 0;
+}
+```
+
+#### `askText` and `askNumber`
+
+- Follow the same structure
+- Wrap `cin` with code to handle the correct type
+- An `prompt` parameter is used to give the player a contextual string prompt
+
+>[!CAUTION]
+>Remember that this simple use of `cin` only works with strings that have no white space in them (such as tabs or spaces). So when a user is prompted for a body part, he can enter `bellybutton`, but `medulla oblongata` will cause a problem for the program.
+>
+>There are ways to compensate for this, but that really requires a discussion of something called *streams*, which is beyond the scope of this book. So use `cin` in this way, but just be aware of its limitations
+
+#### The `tellStory` Function
+
+- This is very straightforward function that simply prints out the story substituting in the players input
 
 ## Summary
 

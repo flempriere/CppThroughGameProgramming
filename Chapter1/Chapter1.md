@@ -302,7 +302,7 @@ There are three common error categories
 - e.g. like in mathematics, multiplication, division and modulus preceed addition and subtraction
 - Like in Mathematics, parentheses `()` can be used to modify precedence
 
-#### Declaring and Initialising Variables
+### Declaring and Initialising Variables
 
 - A *variable* represents a piece of memory
   - Can store, retrieve and manipulate data
@@ -434,7 +434,7 @@ Common guidelines for naming a variable are
 - `double` is the standard floating point type these days
   - Though `float` may be more efficient depending on the system
 
-#### Performing Arithmetic Operations with Variables
+### Performing Arithmetic Operations with Variables
 
 #### Example [Game Stats 2.0](#game-stats-v2)
 
@@ -467,7 +467,7 @@ Common guidelines for naming a variable are
 >[!WARNING]
 >Make sure to pick an integer type that has a large enough range for its intended use
 
-#### Working with Constants
+### Working with Constants
 
 - A constant is a fixed named value
 - They are useful for capturing frequently referencing unchanging values
@@ -487,7 +487,7 @@ Common guidelines for naming a variable are
 >[!CAUTION]
 > Attempting to assign a new value to a constant results in a **compile error**
 
-#### Using Enumerations
+### Using Enumerations
 
 - A set of `unsigned int` constants, called *enumerators*
 - Typically related and ordered

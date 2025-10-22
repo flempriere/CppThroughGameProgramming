@@ -144,9 +144,9 @@ if (expression) {
 - If `expression` is `true`, then `statement` is executed.
 - Otherwise statement is skipped
 
-### Example [Score Rater](#score-rater-v1)
+#### Example [Score Rater](#score-rater-v1)
 
-### Testing `true` and `false`
+#### Testing `true` and `false`
 
 >[!CAUTION]
 >Notice that you don't use a semicolon after the closing parenthesis of the expression you test in an `if` statement. If you were to do this, you'd create an empty statement that would be paired with the `if` statement, essentially rendering the `if` statement useless. Here's an example
@@ -173,11 +173,11 @@ if (expression) {
 >
 >Be on guard for this error. It's an easy one to make and because it's not illegal, it won't produce a compile error
 
-### Interpreting a Value as `true` or `false`
+#### Interpreting a Value as `true` or `false`
 
 - As mentioned any expression can be evaluated as `true` (non-zero) or `false`
 
-### Using Relational Operators
+#### Using Relational Operators
 
 >[!CAUTION]
 >The equal to relational operator is `==`. Don't confuse it with the assignment operator `=`.
@@ -195,7 +195,7 @@ if (expression) {
 >
 >Be on guard for this type of mistake. It's easy to make and in some cases can be hard to find (though most modern compilers should warn about it.)
 
-### Nesting `if` statements
+#### Nesting `if` statements
 
 - An `if` statement may execute a single statement or a block of statements
 - This includes potentially other `if` statements (called *nesting*)
@@ -203,7 +203,7 @@ if (expression) {
 >[!WARNING]
 > You can nest as many levels as you want. However, if you nest code too deeply, it gets hard to read. In general, you should try to limit your nesting to a few levels at most
 
-### Using the `else` clause
+#### Using the `else` clause
 
 - An `else` clause is attached to an `if` statement
 - The `else` clause executes when the `if` statement test expression evaluates to `false`
@@ -216,9 +216,9 @@ if (expression) {
 }
 ```
 
-### Example [Score Rater 2.0](#score-rater-v2)
+#### Example [Score Rater 2.0](#score-rater-v2)
 
-### Using a sequence of `if` statements with `else` clauses
+#### Using a sequence of `if` statements with `else` clauses
 
 - You can chain `if` statements with `else` clauses to create a sequence of ordered test expressions.
 - The statements will be executed from top to bottom until one evaluates as `true` or the `else` clause is reached
@@ -241,7 +241,7 @@ else {
 >[!TIP]
 > While the final `else` clause in an `if-else-if` suite isn't required, you can use it as a way to execute code if none of the expressions in the sequence are `true`
 
-### Example [Score Rater 3.0](#score-rater-v3)
+#### Example [Score Rater 3.0](#score-rater-v3)
 
 ### Using the `switch` statement
 
@@ -282,7 +282,7 @@ switch(choice) {
 
 - `switch` cases must be specific values, they cannot be conditions or ranges
 
-### Example [Menu Chooser](#menu-chooser)
+#### Example [Menu Chooser](#menu-chooser)
 
 >[!CAUTION]
 >You'll almost always want to end each case with a `break` statement. Don't forget them otherwise your code might do things you never intended
@@ -300,7 +300,7 @@ while(expression) {
 - If `expression` is `false` execution moves past the statement
 - If `expression` is `true` the statement is exectued, then control returns to top of the loop where it is tested again
 
-### Example [Play Again](#play-again-v1)
+#### Example [Play Again](#play-again-v1)
 
 ### Using `do` Loops
 
@@ -329,14 +329,14 @@ do {
 >
 >In this case, the loop is entered because `test` is `10`. But because `test` never changes, the loop will never stop. As a result, the user will have to kill the running program to end it. The moral of the story? Make sure that the expression of a loop can eventually become `false` or that there's another way for the loop to end. See [Using Break and Continue Statements](#using-break-and-continue-statements)
 
-### Example [Play Again 2.0](#play-again-v2)
+#### Example [Play Again 2.0](#play-again-v2)
 
 ### Using Break and Continue Statements
 
 - You can immediately exit a loop with the `break` statement
 - You can jump directly to the top of a loop with the `continue` statement
 
-### Example [Finicky Counter](#finicky-counter)
+#### Example [Finicky Counter](#finicky-counter)
 
 - Here we have a main loop structured as
 
@@ -356,7 +356,7 @@ while(true) {
 }
 ```
 
-### Creating a `while(true)` loop
+#### Creating a `while(true)` loop
 
 - The line `while(true)` creates an infinite loop
   - Fine as long as the loop body contains an exit condition
@@ -365,7 +365,7 @@ while(true) {
 >[!WARNING]
 >Although a `while(true)` loop sometimes can be clearer than a traditional, you should try to minimise your use of these loops
 
-### When to use `break` and `continue`
+#### When to use `break` and `continue`
 
 - Can be used in any loop construct
 - Use sparingly, since they make it harder to reason about the flow of a loop
@@ -382,9 +382,9 @@ while(true) {
 | `&&`       | Logical AND | `expression1 && expression2`   |
 | `\|\|`     | Logical OR  | `expression1 \|\| expression2` |
 
-### Example [Designers Network](#designers-network)
+#### Example [Designers Network](#designers-network)
 
-### Using Logical AND
+#### Using Logical AND
 
 - Logical AND (`&&`) joins two expressions to form a larger one
 - `true` only if *both* expressions are `true`
@@ -396,7 +396,7 @@ while(true) {
 | false       | true        | false                      |
 | false       | false       | false                      |
 
-### Using Logical OR
+#### Using Logical OR
 
 - Logical OR (`||`) joins two expressions to form a larger one
 - `true` if *either* expression is `true`
@@ -408,7 +408,7 @@ while(true) {
 | false       | true        | true                       |
 | false       | false       | false                      |
 
-### Using Logical NOT
+#### Using Logical NOT
 
 - Logical NOT (`!`) flips the truthfulness of an expression
 
@@ -441,7 +441,7 @@ while(true) {
 - Computers have techniques for generating *pseudo*random numbers
   - Pseudorandom numbers are not truely based random but based on a formula designed to mimic randomness
 
-### The `rand()` function
+#### The `rand()` function
 
 - `rand()` is a function from the `C` standard library that is grandfathered into `C++`
 - To use `rand()` include `cstdlib` via `#include <cstdlib>`.
@@ -451,7 +451,7 @@ while(true) {
 >[!WARNING]
 >The `rand()` function generates a random number between $0$ and at least $32767$. The exact upper limit depends on your implementation of C++. The upper limit is stored in the constant `RAND_MAX`, which is defined in `cstdlib`. So if you want to know the maximum random number `rand()` can generat, just send `RAND_MAX` to `cout`.
 
-### Seeding a Random Number Generator
+#### Seeding a Random Number Generator
 
 - As mentioned before a computer generates `pseudorandom` numbers
   - random*like* numbers generated according to a sequence or formula

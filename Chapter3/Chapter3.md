@@ -102,21 +102,21 @@ for (initialisation ; test ; action) {
 - *action* is executed after each iteration of the loop body
   - Commonly this is iterating or counting over an index
 
-### Example: [Counter Program](#counter)
+#### Example: [Counter Program](#counter)
 
 >[!CAUTION]
 > If you're using an older compiler that doesn't support modern C++ standards, when you try to compile the [counter](#counter) example you might get an error that says something like `error: 'i': redefinition: multiple initialisation`.
 >
 >The best solution is to use a modern,  compliant compiler such as `g++` or `clang`, or `MSVC` on Windows. If you must use an old compiler then declare any `for` loop counter variables just once for all `for` loops in scope. Scopes are covered in [Chapter 5](../Chapter5/Chapter5.md/)
 
-### Counting with `for` loops
+#### Counting with `for` loops
 
 - Typical use for `for` loops is iterating over a sequence like `for (int i = 0; i < 10; i++)` which iterates from $0$ through to $9$ inclusive
 - `for` loops can also work backwords e.g. `for (int i = 9; i >= 0; --i)` works as before but counts backwards from $9$
 - The *action* in a `for` loop is not restricted to simple sequential counting, e.g. `for(int i = 0; i <= 50; i += 5)` counts up in increments of $5$
 - `for` loops can be just as susceptible to infinite loops as `while` loops
 
-### Using empty statements in `for` loops
+#### Using empty statements in `for` loops
 
 - You can use empty statements in creating your `for` loop, as I did in the following loop, `for (; count < 10; )`
 - Empty statements are effectively ignored, an empty *test condition* is equivalent to a `while(true)` statement
@@ -125,11 +125,11 @@ for (initialisation ; test ; action) {
 > Different game programmers have different traditions. In the last chapter, you saw that you can create a loop that continues until it reaches an exit statement (such as a `break`) using `while(true)`. Some programmers, prefer to use `for(;;)`.
 Because the test expression in this loop is the empty statement, the loop will continue until it encounters some exit statement
 
-### Nestng `for` Loops
+#### Nestng `for` Loops
 
 - You can nest `for` loops
 
-### Understanding `for` Loops
+#### Understanding `for` Loops
 
 - Fundamental types store individual pieces of information
 - We've seen how these can be manipulated through operators and functions
