@@ -630,6 +630,9 @@ int humanMove(const vector<char>& board, char human) {
 - Reprompts a move until its legal
 - Uses a constant reference for the board, the actual update is handled elsewhere
 
+>[!IMPORTANT]
+>**Note**: The book has a typo here, the function `humanMove`  takes in the human piece parameter `char human` but this is never actually used in the function. In our actual implementation we remove this parameter
+
 #### The `computerMove` Function
 
 ```cpp
