@@ -329,6 +329,375 @@ rStr = "Healing Potion";
 
 ### Introducing Tic-Tac-Toe
 
+- In this project we will implement a human-vs-machine Tic-Tac-Toe game, with a simple A.I (*artificial intelligence*)
+
+#### Planning the Game
+
+- Recall, the most important part of programming is planning to program!
+
+>[!NOTE]
+>Game designers work countless hours on concept papers, design documents, and prototypes before programmers write any game code. Once the design work is done, the programmers start their work (more planning). It's only after programmers write their own technical designs that they then begin coding in earnest. The moral of this story? Plan. It's easier to scrap a blueprint than a $50$-story building.
+
+##### Writing the Pseudocode
+
+- Lets first express the code in high-level pseudocode to try and capture the functions we might need
+
+```text
+Create an empty Tic-Tac-Toe board
+Display the game instructions
+Determine who goes first
+Display the board
+While nobody's won and it's not a tie
+    If it's the human's turn
+        Get the human's move
+        Update the board with the human's move
+    Otherwise
+        Calculate the computer's move
+        Update the board with the Computer's move
+    Display the board
+    switch turns
+Congratulate the winner or declare a tie
+```
+
+We can also represent this as a game loop
+
+```mermaid
+---
+title: Tic-Tac-Toe Game Loop
+config:
+    flowchart:
+        htmlLabels: false
+---
+
+flowchart TD
+
+initBoard["Create Empty Board"]
+displayInstructions["Display Instructions"]
+displayBoard["Display the Board"]
+determineFirst["Determine who 
+                goes First"]
+retryGuess@{shape: diam, label: "Player has won or
+                                board full?"}
+whoseTurn@{shape: diam, label: "Human's turn?"}
+getHumanMove["Get the Human's Move"]
+updateTheBoard["Update the Board"]
+switchPlayer["Switch Turns"]
+calculateComputer["Calculate the
+                    Computer's Move"]
+gameTied@{shape: diam, label: "Game Tied?"}
+declareTie["Declare a Tie"]
+declareWinner["Declare a Winner"]
+
+
+
+initBoard-->displayInstructions
+displayInstructions-->determineFirst
+determineFirst-->displayBoard
+displayBoard-->retryGuess
+retryGuess-->|No|whoseTurn
+whoseTurn-->|Yes|getHumanMove
+getHumanMove-->updateTheBoard
+updateTheBoard-->switchPlayer
+switchPlayer-->displayBoard
+whoseTurn-->|No|calculateComputer
+calculateComputer-->updateTheBoard
+retryGuess-->|Yes|gameTied
+gameTied-->|No|declareWinner
+gameTied-->|Yes|declareTie
+```
+
+##### Representing the Data
+
+- How do we represent a piece?
+  - We will display this on a terminal, so let us use either `'X'` or `'O'`
+- How do we represent the board?
+  - Can use a `vector` of nine `char` elements
+  - Board positions then indexed from $0$-$8$
+  - Need a symbol for empty tile, i.e. `' '`
+- Move can therefore be represented as an `int` indicatig the tile to play
+  - We also need to keep track of whose turn it is (using `'X'` or `'O'`)
+
+```mermaid
+
+block
+    columns 3
+    space
+    title("Tic-Tac-Toe Board")
+    space
+    block:array:3
+        columns 3
+        0
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8 
+    end
+
+class title BG
+classDef BG stroke:transparent, fill:transparent
+```
+
+##### Creating a List of Functions
+
+- We use the psuedocode to guide the functions we implement
+
+| Function                                                      | Description                                                                                                                          |
+|---------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| `void instructions()`                                         | Displays the game instructions                                                                                                       |
+| `char askYesNo(string question)`                              | Asks a yes or no question. Receives a question. Returns either a 'y' or 'n'                                                          |
+| `int askNumber(string question, int high, int low = 0)`       | Asks for a number in a given range. Receives a question, a low number and a high number. Returns a number in the range (low, high)   |
+| `char humanPiece()`                                           | Determines the human's piece.  Returns either an `'X'` or an `'O'`                                                                   |
+| `char opponent(char piece)`                                   | Calculates the opposing piece given a piece. Receives either an `'X'` or an `'O'`. Returns either an `'X'` or an `'O'`               |
+| `void displayBoard(const vector<char>& board)`                | Displays the board on the screen. Receives a board                                                                                   |
+| `char winner(const vector<char>& board)`                      | Determines the game winner. Receives a board. Returns an `'X'`, `'O'`, `'T'` (to indicate a tie), or `N` (to indicate no winner yet) |
+| `bool isLegal(const vector<char>& board, int move)`           | Determines if a move is legal. Receives a board and a move. Returns either `true` or `false`                                         |
+| `int humanMove(const vector<char>& board, char human)`        | Gets the human's move. Receives a board and the human's piece Returns the human's move                                               |
+| `int computerMove(vector<char> board, char computer)`         | Calculates the computer's move. Receives a board and the computer's piece Returns the computer's move                                |
+| `void announceWinner(char winner, char computer, char human)` | Congratulates the winner or declares a tie. Receives the winning side, the computer's piece, and the human's piece                   |
+
+#### Setting up the Program
+
+- We start by setting up the function prototypes and declaring any global constants
+
+```cpp
+//global constants
+const char X = 'X';
+const char O = 'O';
+const char EMPTY = ' ';
+const char TIE = 'T';
+const char NO_ONE = 'N';
+
+//function prototypes
+void instructions();
+char askYesNo(string question);
+int askNumber(string question, int high, int low = 0);
+char humanPiece();
+char opponent(char piece);
+void displayBoard(const vector<char>& board);
+char winner(const vector<char>& board);
+bool isLegal(const vector<char>& board, int move);
+int humanMove(const vector<char>& board, char human);
+int computerMove(vector<char> board, char computer);
+void announceWinner(char winner, char computer, char human);
+```
+
+- We create shorthands for `'X'` and `'O'` as global constants as well as other game states, such as
+  - `EMPTY` for an empty tile
+  - `'T'` for a tied game
+  - `'N'` for a game that hasn't finished yet
+
+#### The `main` Function
+
+- Basically implements the pseudocode structure
+
+```cpp
+int main() {
+    int move;
+    const int NUM_SQUARES = 9;
+    vector<char> board(NUM_SQUARES, EMPTY);
+
+    instructions();
+    char human = humanPiece();
+    char computer = opponent(human);
+    char turn = 'X';
+    displayBoard(board);
+
+    while(winner(board) == NO_ONE) {
+        if (turn == human) {
+            move = humanMove(board, human);
+            board[move] = human;
+        }
+        else {
+            move = ComputerMove(board, computer);
+            board[move];
+        }
+        displayBoard(board);
+        turn = opponent(turn);
+    }
+    announceWinner(winner(board), computer, human);
+    return 0;
+}
+```
+
+#### The `instructions` Function
+
+- This simply prints out the instructions
+- Prevents the logic of `main` being drowned out by a lot of formatted string literals
+
+#### The `askYesNo` Function
+
+```cpp
+char askYesNo(string question) {
+    char response;
+    do {
+        cout << question << "(y/n): ";
+        cin >> response; 
+    } while (response != 'y' && response != 'n');
+    
+    return response;
+}
+```
+
+- Observe the function uses a `do` loop to ensure the supplied result is valid
+
+#### The `askNumber` Function
+
+```cpp
+int askNumber(string question, int high, int low) {
+    int number;
+    do {
+        cout << question << " (" << low << " - " << high << "): ";
+        cin >> number;
+    } while(number > high || number < low);
+}
+```
+
+- Basically the numerical analogue to `askYesNo`
+- Recall from the prototype this has a default value of `0` for the low
+
+#### The `humanPiece` Function
+
+```cpp
+char humanPiece() {
+    char go_first = askYesNo("Do you require the first move?");
+    if (go_first == 'y') {
+        cout << "\nThen take the first move. You will need it.\n";
+        return X;
+    }
+    else {
+        cout << "\nYour bravery will be your undoing... I will go first.\n";
+        return O;
+    }
+}
+```
+
+- Prompts the human player to select their piece
+- Observe the delegation to `askYesNo`
+
+#### The `opponent` Function
+
+```cpp
+char opponent(char piece) {
+    if (piece == X) {
+        return O;
+    }
+    else {
+        return X;
+    }
+}
+```
+
+- Returns the opposite of the passed piece
+
+#### The `displayBoard` Function
+
+- Encapsulates the code for drawing the board
+- Again hides a lot of I/O from the `main`
+
+#### The `winner` Function
+
+- Receives a board and returns the Winner
+- Stores an internal list of all the possible winning combinations
+- Checks if any winning combination is matched by a single piece type (`X` or `O`)
+- If no winners checks if the board is full and if so declares a tie
+- else declares that the game is ongoing
+- Uses a `const` reference for efficiency
+
+#### The `isLegal` Function
+
+- Simply checks that a move is legal, i.e. the square is not already occupied
+- Uses a `const` reference for efficiency
+
+#### The `humanMove` Function
+
+```cpp
+int humanMove(const vector<char>& board, char human) {
+    int move  = askNumber("Where will you move?", (board.size() - 1));
+    while (!isLegal(move, board)) {
+        cout << "\nThat square is already occupied, foolish human.\n";
+        move = askNumber("Where will you move?", (board.size() - 1));
+    }
+    cout << "Fine...\n";
+
+    return move;
+}
+```
+
+- Reprompts a move until its legal
+- Uses a constant reference for the board, the actual update is handled elsewhere
+
+#### The `computerMove` Function
+
+```cpp
+int computerMove(vector<char> board, char computer) {
+    unsigned int move = 0;
+    bool found = false;
+
+    //if computer can win on next move, that's the move to make
+    while(!found && move < board.size()) {
+        if (isLegal(move, board)) {
+            board[move] = computer;
+            found = winner(board) == computer;
+            board[move] = EMPTY;
+        }
+        if (!found) {
+            ++move;
+        }
+    }
+
+    //otherwise if human can win on the next move, then block
+    if (!found) {
+        move = 0;
+        char human = opponent(computer);
+        while(!found && move < board.size()) {
+            if (isLegal(move, board)) {
+                board[move] = human;
+                found = winner(board) == human;
+                board[move] = EMPTY;
+            }
+            if (!found) {
+                ++move;
+            }
+        }
+    }
+    //otherwise, moving to the best open square
+    if (!found) {
+        move = 0;
+        unsigned int i = 0;
+
+        const int BEST_MOVES[] = {4,0,2,6,8,1,3,5,7};
+        //pick best open square
+        while(!found && i < board.size()) {
+            if (isLegal(move, board)) {
+                found = true;
+            }
+            ++i;
+        }
+    }
+    cout << "I shall take square number " << move << endl;
+    return move;
+}
+```
+
+- The computer first checks to see if it can win, and plays that,
+- Else, sees if the human can win, and will block them, else
+- Plays the best available square, the order being:
+  - Middle
+  - Corners
+  - Edges
+- Observe we use copy by value so we have a version of the board we can adjust to inspect the impact of certain moves without modifying the original game state
+
+>[!NOTE]
+>The Tic-Tac-Toe game considers only the next possible move. Programs that play serious games of strategy, such as chess, look far deeper into the consequences of individual moves and consider many levels of moves and countermoves. In fact, good computer chess programs can consider literally millions of board positions before making a move
+
+#### The `announceWinner` Function
+
+This function receives the winner of the game, the computer's piece and the human's piece. The function announces the winner or declares a tie.
+
 ## Summary
 
 - A reference is an alias; it's another name for a variable
