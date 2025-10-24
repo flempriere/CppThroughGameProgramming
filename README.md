@@ -56,7 +56,9 @@ or,
 4. [Chapter 4](./Chapter4/Chapter4.md) - The Standard Template Library: [Hangman](./Chapter4/Chapter4.md#major-project-hangman)
 5. [Chapter 5](./Chapter5/Chapter5.md) - Functions: [Mad Lib](./Chapter5/Chapter5.md#major-project-mad-lib)
 6. [Chapter 6](./Chapter6/Chapter6.md) - References: [Tic-Tac-Toe](./Chapter6/Chapter6.md#major-project-tic-tac-toe)
-7. [Chapter 7](./Chapter7/Chapter7.md) - Pointers: Tic-Tac-Toe 2.0
+7. [Chapter 7](./Chapter7/Chapter7.md) - Pointers: [Tic-Tac-Toe 2.0](./Chapter7/Chapter7.md#major-project-tic-tac-toe-20)
+8. [Chapter 8](./Chapter8/Chapter8.md) - Classes: [Critter Caretaker](./Chapter8/Chapter8.md#major-project-critter-caretaker)
+9. [Chapter 9](./Chapter9/Chapter9.md) - Advanced Classes and Dynamic Memory: Game Lobby
 
 ## Code Style
 

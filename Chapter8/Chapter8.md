@@ -18,7 +18,7 @@ Demonstrates setting member access levels
 
 Demonstrates variables and functions
 
-### [Critter Caretaker](./Examples/05_CritterCaretaker/critterCaretaker.cpp)
+### [Major Project: Critter Caretaker](./Examples/05_CritterCaretaker/critterCaretaker.cpp)
 
 Brings together all we've seen with classes to create a game where we care for a virtual pet
 
@@ -442,7 +442,7 @@ cout << Critter::GetTotal() << "\n\n";
 - You can call a static member function without any class instances existing
 - Private static member functions can only be accessed by other member functions of the class
 
-### Example [Critter Caretaker](#critter-caretaker)
+### Example [Critter Caretaker](#major-project-critter-caretaker)
 
 - Simple game where we care for a virtual pet
 - Player can
