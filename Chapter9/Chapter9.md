@@ -559,8 +559,8 @@ class title BG
 class crit BG
 class copy BG
 classDef BG stroke:transparent, fill:transparent
-style copyPointer stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
-style string stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
+style copyPointer stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
+style string stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
 ```
 
 - To perform a deep copy, we have to duplicate the memory, e.g.
@@ -601,8 +601,8 @@ class title BG
 class crit BG
 class copy BG
 classDef BG stroke:transparent, fill:transparent
-style copyPointer stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
-style string2 stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
+style copyPointer stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
+style string2 stroke:#f66,stroke-width:2px,stroke-dasharray: 5 5
 ```
 
 >[!WARNING]
@@ -717,6 +717,7 @@ class heap BG
 class m_pNext BG
 class m_Name BG
 class Player BG
+class next BG
 classDef BG stroke:transparent, fill:transparent
 ```
 

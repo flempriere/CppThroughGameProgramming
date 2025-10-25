@@ -58,7 +58,8 @@ or,
 6. [Chapter 6](./Chapter6/Chapter6.md) - References: [Tic-Tac-Toe](./Chapter6/Chapter6.md#major-project-tic-tac-toe)
 7. [Chapter 7](./Chapter7/Chapter7.md) - Pointers: [Tic-Tac-Toe 2.0](./Chapter7/Chapter7.md#major-project-tic-tac-toe-20)
 8. [Chapter 8](./Chapter8/Chapter8.md) - Classes: [Critter Caretaker](./Chapter8/Chapter8.md#major-project-critter-caretaker)
-9. [Chapter 9](./Chapter9/Chapter9.md) - Advanced Classes and Dynamic Memory: Game Lobby
+9. [Chapter 9](./Chapter9/Chapter9.md) - Advanced Classes and Dynamic Memory: [Game Lobby](./Chapter9/Chapter9.md#major-project-game-lobby)
+10. [Chapter 10](./Chapter10/Chapter10.md) - Inheritance and Polymorphism: Blackjack
 
 ## Code Style
 
