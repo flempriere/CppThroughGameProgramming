@@ -63,4 +63,4 @@ or,
 
 ## Code Style
 
-Generally each Chapter is treated by restricting oneself to the parts of the language as presented in the book up to that point. Where we deviate from this we will generally make reference to doing so.
+Generally each Chapter is treated by restricting oneself to the parts of the language as presented in the book up to that point. Where we deviate from this we will generally make reference to doing so. This is typically done where changes in the standard have deprecated some behaviour the book relies on (or the occasional typo correction)
