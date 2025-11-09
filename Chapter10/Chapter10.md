@@ -28,6 +28,132 @@ A complicated program showing how to combine features of object-oriented design 
 
 ## Exercises
 
+### Discussion Questions
+
+1. *What benefits does inheritance bring to game programming?*
+    - Inheritance lets you reuse common code between related elements
+      - This saves time on code maintainence
+      - Reduces errors associated with duplicated code
+
+2. *How does polymorphism expand the power of inheritance?*
+    - The use of polymorphism lets you treat derived classes as their common base type
+      - A way of implementing *interfaces* where you can interact with objects based on their behaviours rather than their explicit types
+    - Can provide customised behaviour for each subclass to a given request (*function call*)
+      - i.e. *All* enemies might **attack**, but how and the implementation may differ
+3. *What kind of game entities might it make  sense to model through inheritance?*
+    - Inheritance is best used to implement *is-a* type relations. So for example in an RPG all enemies might have a base class with the basic enemy features, and then more specialised derived classes
+4. *What kind of game-related classes would be best implemented as abstract classes?*
+    - Abstract classes are best used for describing *interfaces* or classes that capture behavour but would never be instantiated itself
+    - e.g. an inventory item might have common behaviour but you would always create a specific type of item never an item itself
+5. *Why is it advantageous to be able to point to a derived class object with a base class pointer?*
+    - It allows you to refer to all the related subclasses together and use dynamic polymorphism to generate the correct behaviour
+    - For example we can have an inventory of *items* and manage that as one collection, rather than as several inventories of individual *item* sub classes
+
+### Exercises
+
+#### [Exercise 10.1](./Exercises/Ex10_1/finalBoss.cpp)
+
+*Improve the [Simple Boss 2.0](#simple-boss-20) program by adding a new class, `FinalBoss`, that is derved from the `Boss` class. The `FinalBoss` should define a new method `MegaAttack()`, that inflicts* $10$ *times the amount of damage as the `SpecialAttack()` method does.*
+
+Our `FinalBoss` class looks like the below code,
+
+```cpp
+FinalBoss::FinalBoss(): m_MegaMultiplier(10) {}
+
+void FinalBoss::MegaAttack() const {
+    cout << "Mega Attack inflicts " << (m_MegaMultiplier * m_DamageMultiplier * m_Damage);
+    cout << " damage points!\n";
+}
+
+int main() {
+    cout << "Creating an enemy.\n";
+    Enemy enemy1;
+    enemy1.Attack();
+
+    cout << "\nCreating a boss.\n";
+    Boss boss1;
+    boss1.Attack();
+    boss1.SpecialAttack();
+
+    cout << "\n Creating a final boss.\n";
+    FinalBoss final1;
+    final1.Attack();
+    final1.SpecialAttack();
+    final1.MegaAttack();
+
+    return 0;
+}
+```
+
+We inherit from `Boss` adding a new `m_MegaMultiplier` for the new `MegaAttack` function which is defaulted to $10$ per the exercise. `MegaAttack` as an implementation combines the `m_specialMultiplier` and `m_megaMultiplier`. Note there is some subtlety here, as we had to convert `m_specialMultiplier` from a `private` member variable to a `protected` member variable so that the `FinalBoss` class can access it.
+
+#### [Exercise 10.2](./Exercises/Ex10_2/blackjack2.cpp)
+
+*Improve the [Blackjack](#major-project-blackjack) game program by forcing the deck to repopulate before a round if the number of cards is running low.*
+
+The first step is to add a function to the `Deck` class to be able to inspect how many cards are left in the deck, i.e. its size, we simply delegate to the underlying `vector`'s size member function.
+
+```cpp
+int Deck::size() {
+    return m_Cards.size();
+}
+```
+
+Now we modify the game round to check the size of the deck before starting, and if it's too small, to call the `populate` member function on the `Deck` to repopulate it. The relevant change to the function, is
+
+```cpp
+void Game::Play() {
+    //if Deck is sufficiently empty repopulate it
+    if (m_Deck.size() < MIN_DECK_SIZE_FOR_ROUND_START) {
+        cout << "Repopulated the deck\n";
+        m_Deck.Populate();
+    }
+    .
+    .
+    .
+}
+```
+
+Now the value of `MIN_DECK_SIZE_FOR_ROUND_START`, can be freely set. A clever implementation would use statistics based on the expected number of cards needed per round for a given number of players. We've gone for simplicity and instead just used a preset value (In this case $40$) set sufficiently high that even for a game with the max number of players we shouldn't run out.
+
+#### [Exercise 10.3](./Exercises/Ex10_3/orcBoss.cpp)
+
+*Improve the [Abstract Creature](#abstract-creature) by adding a new class `OrcBoss`, that is derived from `Orc`. An `OrcBoss` object should start off with* $180$ *for its `health` data member. You should also override the virtual `Greet()` member data function, so that it displays: `The orc boss growls hello.`*
+
+What we are doing here is adding an extra layer of *traditional* inheritance, since `Orc` itself is not an abstract class. We've seen how to do this before! The implementation is straightforward
+
+```cpp
+class OrcBoss : public Orc {
+    public:
+        OrcBoss(int health = 180);
+        virtual void Greet() const;
+};
+
+OrcBoss::OrcBoss(int health): Orc(health) {}
+
+void OrcBoss::Greet() const {
+    cout << "The orc boss growls hello\n";
+}
+```
+
+As with `Orc` we define defaults for our constructor and simply pass through to the parent class constructor. We then overide the method as per normal.
+
+We can then treat both instances as a `Creature` as demonstrated in the updated `main`, below
+
+```cpp
+int main() {
+    Creature* pCreature = new Orc();
+    pCreature->Greet();
+    pCreature->DisplayHealth();
+
+    Creature* pCreature2 = new OrcBoss();
+    pCreature2->Greet();
+    pCreature2->DisplayHealth();
+
+    return 0;
+}
+```
+
 ## Notes
 
 - *Inheritance* and *Polymorphism* are techniques for manipulating the relationship between different classes
