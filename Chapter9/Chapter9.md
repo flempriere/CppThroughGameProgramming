@@ -42,7 +42,7 @@ Creates a toy game lobby to demonstrate the practicalities of working with class
     - Technically the memory is always freed when the program finishes, so if the lifetime extends until program termination you can get away without freeing it
     - However, it is good practice to always free the memory (since you don't know when this ight change in a refactor)
 
-### Exercises
+### Code Exercises
 
 #### [Exercise 9.1](./Exercises/Ex9_1/gameLobby2.cpp)
 

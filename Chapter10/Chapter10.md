@@ -49,7 +49,7 @@ A complicated program showing how to combine features of object-oriented design 
     - It allows you to refer to all the related subclasses together and use dynamic polymorphism to generate the correct behaviour
     - For example we can have an inventory of *items* and manage that as one collection, rather than as several inventories of individual *item* sub classes
 
-### Exercises
+### Code Exercises
 
 #### [Exercise 10.1](./Exercises/Ex10_1/finalBoss.cpp)
 
@@ -1230,4 +1230,50 @@ ostream& operator<<(ostream& os, const GenericPlayer& aGenericPlayer) {
 
 ## Summary
 
+- One of the key elements of OOP is inheritance, which allows you to derive a new class from an existing one. The new class automatically inherits data members and member functions from the existing class
+- A derived class does not inherit constructors, copy constructors, destructors, or an overloaded assignment operator
+- Base class constructors are automatically called before the derived class destructor whena  derived class object is destroyed
+- Protected members are accessible only in their own class and certain derived classes, depending upon the derivation access level
+- Using public derivation means that public members in the base class become public members in the derived class, protected members in the base class become protected members in the derived class, and private members are (as always) inaccessible
+- You can override base class member functions by giving them new definitions in a derived class
+- You can explicitly call a base class member function from a derived class
+- You can explicitly call the base class constructor from a derived class instructor
+- Polymorphism is the quality whereby a member function will produce different results depending on the type of object for which it is called
+- Virtual functions allow for polymorphic behaviour
+- Once a member function is defined as virtual, it's virtual in any derived class
+- A pure virtual function is a function to which you don't need to give a definition. You specify a pure virtual function by placing an equal sign and a zero at the end of the function header
+- An abstract class has at least one pure virtual member function
+- An abstract class can't be used to instantiate an object
+
 ## Questions and Answers
+
+1. *How many levels of inheritance can you have?*
+    - Theoretically as many as you want. Heavily nested inheritance structures can be difficult to reason about and maintain though
+2. *Is friendship inherited? That is, if a function is a friend of a base class, is it automatically a friend of a derived class?*
+    - No
+3. *Can a class have more than one direct base class?*
+    - Yes, this is called **multiple inheritance**. It's powerful, but creates its own set of thorny issues
+4. *Why would you want to call a base class constructor from a derived class constructor?*
+    - So you can control exactly how the base class constructor is called. For example, you might want to pass specific values to the base class constructor
+5. *Are there any dangers in overriding a base class function?*
+    - Yes. By overriding a base class member function, you hide all of the overloaded versions of the function in the base class. However, you can stil call a hidden base class member function explicitly by using the base class name and the scope resolution operator
+6. *How can I solve this problem of hiding base class functions?*
+    - One way is to override all of the overloaded versions of the base class function
+7. *Why do you usually want to call the assignment operator member function of the base class from the assignment operator member function of a derived class?*
+    - So that any base class data members can be properly assigned
+8. *Why do you usually want to call the copy constructor of a base class from the copy constructor of a derived class?*
+    - So that any base class data members are properly copied
+9. *Why can you lose access to an object's member functions when you point to it with a base class member?*
+    - Because any non-virtual functions are called based on the pointer type and the object type
+10. *Why not make all member functions virtual, just in case you ever need polymorphic behaviour from them?*
+    - Because there's a performance cost associated with making member functions virtual
+11. *So when should you make member functions virtual?*
+    - Whenever they may be inherited from a base class
+12. *When should you make a destructor virtual?*
+    - If you have any virtual member functions in a class, you should make the destructor virtual, too. However, some programmers say that to be safe, you should always make a destructor virtual
+13. *Can constructors be virtual?*
+    - No. This means that the copy constructor also can't be virtual
+14. *In OOP, what is slicing?*
+    - Slicing is cutting off part of an object. Assigning an object of a derived class to a variable of a base class is legal, but you slice the object, losing the data members declared in the derived class and losing access to member functions of the derived class
+15. *What good are abstract classes if you can't instantiate objects from them?*
+    - Abstract classes can be very useufl. They can contain many common class members that other classes will inherit, which saves you the effort of defining those members over and over again
