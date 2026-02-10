@@ -70,6 +70,7 @@ strings store their characters in an underlying array of characters. For a strin
 
 *What's wrong with the following code?*
 
+[//]: # ({% raw %})
 ```cpp
 {
     const int ROWS = 2;
@@ -77,6 +78,7 @@ strings store their characters in an underlying array of characters. For a strin
     char board[COLUMNS][ROWS] = {{'O', 'X', 'O'}, {' ', 'X', 'X'}};
 }
 ```
+[//]: # ({% endraw %})
 
 The problem above is that the way the code semantically reads is that board should be a $2 \times 3$ array, but instead the columns and rows have been flipped as so what is actually happening is board is declared as a $3 \times 2$, which we then try to initialise as a $2 \times 3$ array. This code should cause a *compile error*
 
@@ -369,11 +371,13 @@ if (phrase.find(word2) != string::npos) {
 
 - Multidimensional arrays declarations can be considered as writing an `array of arrays`, i.e. we write a series of `[]` to specify the size, and use nested initiliser lists to initialise, e.g.
 
+[//]: # ({% raw %})
 ```cpp
 char board[ROWS][COLUMNS] = {{'O', 'X', 'O'},
                              {' ', 'X', 'X'},
                              {'X', 'O', 'O'}};
 ```
+[//]: # ({% endraw %})
 
 >[!TIP]
 >It's possible to simply declare a multidimensional array without initialising it. Here's an example:
